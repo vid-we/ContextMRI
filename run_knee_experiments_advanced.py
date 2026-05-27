@@ -61,14 +61,14 @@ SCANS = [
         "sequence":    "TurboSpinEcho",
         "TR": 3120, "TE": 33, "TI": 100, "flip_angle": 140,
     },
-    {
-        "filename":    "file1001429",
-        "slice":       16,
-        "contrast":    "PDFS",
-        "pathology":   "Cartilage - Partial Thickness loss/defect, Bone- Subchondral edema",
-        "sequence":    "TurboSpinEcho",
-        "TR": 3120, "TE": 33, "TI": 100, "flip_angle": 140,
-    },
+    # {
+    #     "filename":    "file1001429",
+    #     "slice":       16,
+    #     "contrast":    "PDFS",
+    #     "pathology":   "Cartilage - Partial Thickness loss/defect, Bone- Subchondral edema",
+    #     "sequence":    "TurboSpinEcho",
+    #     "TR": 3120, "TE": 33, "TI": 100, "flip_angle": 140,
+    # },
     # {
     #     "filename":    "file1001655",
     #     "slice":       19,
