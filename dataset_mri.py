@@ -104,7 +104,12 @@ class SKMDataset:
 class MRIDataset:
     def __init__(self, metadata_file_knee, metadata_file_brain, train=True):
         self.metadata_knee = pd.read_csv(metadata_file_knee)
-        self.metadata_brain = pd.read_csv(metadata_file_brain)
+        # #DW, 17.5.2026 Brain data optional - check for None
+        if metadata_file_brain is not None:
+            self.metadata_brain = pd.read_csv(metadata_file_brain)
+        else:
+            self.metadata_brain = pd.DataFrame()
+        #self.metadata_brain = pd.read_csv(metadata_file_brain)
         self.train = train
 
         self.metadata_knee_prev = self.metadata_knee.copy()
@@ -115,9 +120,12 @@ class MRIDataset:
             filename = row['filename']
             slice_number = row['slice']
             if self.train:
-                file_path = os.path.join(f"../fastmri/{anatomy}_mvue_320_train", "slice", filename, f"{slice_number:03d}.npy")
+                #file_path = os.path.join(f"../fastmri/{anatomy}_mvue_320_train", "slice", filename, f"{slice_number:03d}.npy")
+                file_path = os.path.join(f"./assets/fastmri/{anatomy}", filename, "slice", f"{slice_number:03d}.npy")
             else:
-                file_path = os.path.join(f"../fastmri/{anatomy}_mvue_320_val", "slice", filename, f"{slice_number:03d}.npy")
+                #file_path = os.path.join(f"../fastmri/{anatomy}_mvue_320_val", "slice", filename, f"{slice_number:03d}.npy")
+                file_path = os.path.join(f"./assets/fastmri/{anatomy}", filename, "slice", f"{slice_number:03d}.npy")
+                #print(file_path)
                 
             if os.path.exists(file_path):
                 valid_rows_knee.append(row)
@@ -128,9 +136,11 @@ class MRIDataset:
             filename = row['filename']
             slice_number = row['slice']
             if self.train:
-                file_path = os.path.join(f"../fastmri/{anatomy}_mvue_320_train", "slice", filename, f"{slice_number:03d}.npy")
+                #file_path = os.path.join(f"../fastmri/{anatomy}_mvue_320_train", "slice", filename, f"{slice_number:03d}.npy")
+                file_path = os.path.join(f"./assets/fastmri/{anatomy}", filename, "slice", f"{slice_number:03d}.npy")
             else:
-                file_path = os.path.join(f"../fastmri/{anatomy}_mvue_320_val", "slice", filename, f"{slice_number:03d}.npy")
+                #file_path = os.path.join(f"../fastmri/{anatomy}_mvue_320_val", "slice", filename, f"{slice_number:03d}.npy")
+                file_path = os.path.join(f"./assets/fastmri/{anatomy}", filename, "slice", f"{slice_number:03d}.npy")
                 
             if os.path.exists(file_path):
                 valid_rows_brain.append(row)
@@ -156,10 +166,16 @@ class MRIDataset:
             
         # Change the path in your custom MRI data repository
         if self.train:
-            file_path = os.path.join(f"../fastmri/{anatomy}_mvue_320_train", "slice", filename, f"{slice_number:03d}.npy")
+            #DW, 17.5.2026: file_path = os.path.join(f"../fastmri/{anatomy}_mvue_320_train", "slice", filename, f"{slice_number:03d}.npy")
+            file_path = os.path.join(f"./assets/fastmri/{anatomy}", filename, "slice", f"{slice_number:03d}.npy")
+            
         else:
-            file_path_img = os.path.join(f"../fastmri/{anatomy}_mvue_320_val", "slice", filename, f"{slice_number:03d}.npy")
-            file_path_mps = os.path.join(f"../fastmri/{anatomy}_mvue_320_val", "mps", filename, f"{slice_number:03d}.npy")
+            #file_path_img = os.path.join(f"../fastmri/{anatomy}_mvue_320_val", "slice", filename, f"{slice_number:03d}.npy")
+            #file_path_mps = os.path.join(f"../fastmri/{anatomy}_mvue_320_val", "mps", filename, f"{slice_number:03d}.npy")
+            file_path_img = os.path.join(f"./assets/fastmri/{anatomy}", filename, "slice", f"{slice_number:03d}.npy")
+            file_path_mps = os.path.join(f"./assets/fastmri/{anatomy}", filename, "mps", f"{slice_number:03d}.npy")
+            print(file_path_img)
+            print(file_path_mps)
      
         # The file path should be contained numpy complex64 values
         if self.train:

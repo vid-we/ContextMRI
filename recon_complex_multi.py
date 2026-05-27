@@ -30,7 +30,8 @@ def main(args):
     args.save_dir.mkdir(exist_ok=True, parents=True)
     json_path = os.path.join(args.save_dir, "summary.json")
   
-    device = torch.device("cuda" if torch.cuda.is_available else "cpu")
+    #device = torch.device("cuda" if torch.cuda.is_available else "cpu")
+    device = torch.device("cpu")
     tokenizer = CLIPTokenizer.from_pretrained(args.pretrained_model_name_or_path, subfolder="tokenizer")
     text_encoder = CLIPTextModel.from_pretrained(args.pretrained_model_name_or_path, subfolder="text_encoder")
     noise_scheduler = DDPMScheduler.from_pretrained(args.pretrained_model_name_or_path, subfolder="scheduler")
@@ -47,7 +48,7 @@ def main(args):
                 tokenizer=tokenizer,
                 unet=unet,
                 scheduler=noise_scheduler,
-                use_clip=args.use_clip,
+                #DW, 17.5.2026 entfernt: use_clip=args.use_clip,
                 config_path=args.model_config,
             )
     pipeline = pipeline.to(device)
@@ -57,7 +58,9 @@ def main(args):
     image_size = 512 if args.mri_type == "skm-tea" else 320
 
     args.load_dir_meta_brain = args.load_dir_meta_brain if args.load_dir_meta_brain != "null" else None
-    mri_dataset = MRIDataset(args.load_dir_meta_knee, args.load_dir_meta_brain, stage=args.stage)
+    #mri_dataset = MRIDataset(args.load_dir_meta_knee, args.load_dir_meta_brain, stage=args.stage)
+    # DW, 17.5.2026 stage entfernen, train = False für inference
+    mri_dataset = MRIDataset(args.load_dir_meta_knee, args.load_dir_meta_brain, train=False)
     mri_dataloader = DataLoader(
         mri_dataset,          # The dataset to load
         batch_size=args.batch_size,    # Number of samples per batch
@@ -202,8 +205,12 @@ if __name__=='__main__':
                         default=5.0, help="regularization weight inversely proportional to proximal step size")
     parser.add_argument('--CG_iter', type=int, 
                         default=5, help="Num CG iter per timestep. Default is 5")
-    parser.add_argument('--batch_size', default=1, type=int, help="batch-size", help="To keep batch size = 1 if mps data is not always same shape")
+    parser.add_argument('--batch_size', default=1, type=int, help="To keep batch size = 1 if mps data is not always same shape")
     parser.add_argument('--mri_type', type=str, choices=["fastmri", "skm-tea"], default="fastmri")
+    # DW, 17.5.2026 added
+    #parser.add_argument('--stage', type=str, default="val")
+    #parser.add_argument('--use_clip', action='store_true', default=False)
+    parser.add_argument('--model_config', type=str, default="./configs/model_index.json")
     
     args = parser.parse_args()
     main(args)
