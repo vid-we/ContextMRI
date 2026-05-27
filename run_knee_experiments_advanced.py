@@ -22,6 +22,9 @@ from mri.utils import normalize_np, real_to_nchw_comp, clear, get_mask
 from utils import set_seed, calculate_ssim, calculate_lpips
 from sigpy.mri import poisson as poisson_mask
 
+from datetime import datetime
+import time
+
 
 # ---------------------------------------------------------------------------
 # SCAN-LISTE
@@ -29,30 +32,30 @@ from sigpy.mri import poisson as poisson_mask
 # pathology=None  → gesunder Scan (kein Pathologie-Eintrag im Prompt)
 # ---------------------------------------------------------------------------
 SCANS = [
-    # {
-    #     "filename":    "file1000033",
-    #     "slice":       10,
-    #     "contrast":    "PD",
-    #     "pathology":   None,
-    #     "sequence":    "TurboSpinEcho",
-    #     "TR": 2750, "TE": 27, "TI": 100, "flip_angle": 140,
-    # },
-    # {
-    #     "filename":    "file1001126",
-    #     "slice":       26,
-    #     "contrast":    "PD",
-    #     "pathology":   "Cartilage - Partial Thickness loss/defect, Meniscus Tear, Bone- Subchondral edema",
-    #     "sequence":    "TurboSpinEcho",
-    #     "TR": 2750, "TE": 27, "TI": 100, "flip_angle": 140,
-    # },
-    # {
-    #     "filename":    "file1001184",
-    #     "slice":       18,
-    #     "contrast":    "PD",
-    #     "pathology":   "Meniscus Tear, Displaced Meniscal Tissue, Ligament - ACL High Grade Sprain",
-    #     "sequence":    "TurboSpinEcho",
-    #     "TR": 2750, "TE": 27, "TI": 100, "flip_angle": 140,
-    # },
+    {
+        "filename":    "file1000033",
+        "slice":       10,
+        "contrast":    "PD",
+        "pathology":   None,
+        "sequence":    "TurboSpinEcho",
+        "TR": 2750, "TE": 27, "TI": 100, "flip_angle": 140,
+    },
+    {
+        "filename":    "file1001126",
+        "slice":       26,
+        "contrast":    "PD",
+        "pathology":   "Cartilage - Partial Thickness loss/defect, Meniscus Tear, Bone- Subchondral edema",
+        "sequence":    "TurboSpinEcho",
+        "TR": 2750, "TE": 27, "TI": 100, "flip_angle": 140,
+    },
+    {
+        "filename":    "file1001184",
+        "slice":       18,
+        "contrast":    "PD",
+        "pathology":   "Meniscus Tear, Displaced Meniscal Tissue, Ligament - ACL High Grade Sprain",
+        "sequence":    "TurboSpinEcho",
+        "TR": 2750, "TE": 27, "TI": 100, "flip_angle": 140,
+    },
     {
         "filename":    "file1001429",
         "slice":       20,
@@ -61,22 +64,22 @@ SCANS = [
         "sequence":    "TurboSpinEcho",
         "TR": 3120, "TE": 33, "TI": 100, "flip_angle": 140,
     },
-    # {
-    #     "filename":    "file1001429",
-    #     "slice":       16,
-    #     "contrast":    "PDFS",
-    #     "pathology":   "Cartilage - Partial Thickness loss/defect, Bone- Subchondral edema",
-    #     "sequence":    "TurboSpinEcho",
-    #     "TR": 3120, "TE": 33, "TI": 100, "flip_angle": 140,
-    # },
-    # {
-    #     "filename":    "file1001655",
-    #     "slice":       19,
-    #     "contrast":    "PDFS",
-    #     "pathology":   "Ligament - ACL High Grade Sprain, Bone-Fracture/Contusion/dislocation",
-    #     "sequence":    "TurboSpinEcho",
-    #     "TR": 2870, "TE": 33, "TI": 100, "flip_angle": 140,
-    # },
+    {
+        "filename":    "file1001429",
+        "slice":       16,
+        "contrast":    "PDFS",
+        "pathology":   "Cartilage - Partial Thickness loss/defect, Bone- Subchondral edema",
+        "sequence":    "TurboSpinEcho",
+        "TR": 3120, "TE": 33, "TI": 100, "flip_angle": 140,
+    },
+    {
+        "filename":    "file1001655",
+        "slice":       19,
+        "contrast":    "PDFS",
+        "pathology":   "Ligament - ACL High Grade Sprain, Bone-Fracture/Contusion/dislocation",
+        "sequence":    "TurboSpinEcho",
+        "TR": 2870, "TE": 33, "TI": 100, "flip_angle": 140,
+    },
 ]
 
 # ---------------------------------------------------------------------------
@@ -92,15 +95,15 @@ SCANS = [
 # poisson2d  x8  → beste Maske aus Vortest, Referenz
 # ---------------------------------------------------------------------------
 MASK_CONFIGS = [
-   # {"mask_type": "uniform1d",  "acc_factor": 4, "center_fraction": 0.08},
-   # {"mask_type": "gaussian1d", "acc_factor": 4, "center_fraction": 0.08},
+    {"mask_type": "uniform1d",  "acc_factor": 4, "center_fraction": 0.08},
+    {"mask_type": "gaussian1d", "acc_factor": 4, "center_fraction": 0.08},
     {"mask_type": "gaussian2d", "acc_factor": 8, "center_fraction": 0.04},
-   # {"mask_type": "poisson2d",  "acc_factor": 8, "center_fraction": 0.04},
+    {"mask_type": "poisson2d",  "acc_factor": 8, "center_fraction": 0.04},
 ]
 
 # CFG-Werte: 0 (leer), 1, 2 — CFG=3 zeigte im Vortest konsistent schlechteren PSNR
-#CFG_SCALES = [0.0, 1.0, 2.0]
-CFG_SCALES = [1.0]
+CFG_SCALES = [0.0, 1.0, 2.0, 3.0]
+#CFG_SCALES = [1.0]
 
 # ---------------------------------------------------------------------------
 # GEMEINSAME PARAMETER
@@ -490,6 +493,9 @@ def generate_comparison_plot(results: list, output_path: str):
 # MAIN
 # ---------------------------------------------------------------------------
 def main():
+    startzeit = datetime.now()
+    print("Start:", startzeit.strftime("%d.%m.%Y %H:%M:%S"))
+
     experiments = build_experiment_list()
     print(f"Testplan: {len(experiments)} Experiments")
     print(f"Scans:    {len(SCANS)} (2 healthy, 4 pathol.)")
@@ -545,6 +551,8 @@ def main():
                 if subset:
                     print(f"   {label} · {meta:15s}: {sum(subset)/len(subset):.2f} dB (n={len(subset)})")
 
+    endzeit = datetime.now()
+    print("End :", endzeit.strftime("%d.%m.%Y %H:%M:%S"))
 
 if __name__ == "__main__":
     main()
