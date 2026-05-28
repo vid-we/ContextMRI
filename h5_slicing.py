@@ -48,7 +48,7 @@ for i in range(0, len(FILES)):
                 show_pbar=False,
             ).run()                  # [Coils, H, W] complex64, zero in background
 
-            # 2. SOS-normalize: in-support → SOS=1, background → fill with 1/sqrt(n_coils)
+            # 2. SOS-normalize: in-support -> SOS=1, background -> fill with 1/sqrt(n_coils)
             sos = np.sqrt(np.sum(np.abs(mps)**2, axis=0, keepdims=True))  # [1, H, W]
             background_mask = sos < 1e-6                                   # [1, H, W] bool
 

@@ -1,4 +1,3 @@
-# run_this_locally.py  – paste and run from your project root
 import numpy as np
 from datetime import datetime
 import time

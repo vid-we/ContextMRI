@@ -1,9 +1,9 @@
 # run_knee_experiments.py
-# Knee MRI Rekonstruktions-Tests
-# - 6 Scans (gesund + verschiedene Pathologien)
-# - 4 Maskentypen
-# - CFG-Scale-Variation
-# - 5 Metadata-Varianten (dynamisch aus Scan-Metadaten generiert)
+# Knee MRI reconstructions tests
+# - 6 Scans (healthy + diff. pathologies)
+# - 4 Mask types
+# - 4 diff CFG-Scales
+# - 5 Metadata variants
 
 import json
 import os
@@ -25,12 +25,9 @@ from sigpy.mri import poisson as poisson_mask
 from datetime import datetime
 import time
 
-
-# ---------------------------------------------------------------------------
 # SCAN-LISTE
 # Jeder Eintrag entspricht einem Slice mit echten Metadaten aus der CSV.
 # pathology=None  → gesunder Scan (kein Pathologie-Eintrag im Prompt)
-# ---------------------------------------------------------------------------
 SCANS = [
     {
         "filename":    "file1000033",
@@ -82,36 +79,36 @@ SCANS = [
     },
 ]
 
-# ---------------------------------------------------------------------------
-# MASKEN-KONFIGURATION
+# MASK CONFIG
 #
 # Entfernt:  uniform1d x8  (schlechteste Performance im Vortest, ~29 dB)
-# Neu:       gaussian2d x8 (realistischere 2D-Dichteverteilung als uniformrandom2d,
-#                           vergleichbar mit poisson2d aber andere Geometrie)
+# Neu:       gaussian2d x8 
 #
-# uniform1d  x4  → schwache 1D-Baseline
-# gaussian1d x4  → bessere 1D-Maske (gaussiangewichtet)
-# gaussian2d x8  → 2D-Maske, hohe Beschleunigung, realistische k-Raum-Dichte
-# poisson2d  x8  → beste Maske aus Vortest, Referenz
-# ---------------------------------------------------------------------------
+# uniform1d  x4 (as a baseline)
+# gaussian1d x4
+# gaussian2d x8, realistische k-Raum-Dichte
+# poisson2d  x8, beste Maske aus Vortest, Referenz in paper
 MASK_CONFIGS = [
     {"mask_type": "uniform1d",  "acc_factor": 4, "center_fraction": 0.08},
     {"mask_type": "gaussian1d", "acc_factor": 4, "center_fraction": 0.08},
-    {"mask_type": "gaussian2d", "acc_factor": 8, "center_fraction": 0.04},
+    #not in second run {"mask_type": "gaussian2d", "acc_factor": 8, "center_fraction": 0.04}, 
     {"mask_type": "poisson2d",  "acc_factor": 8, "center_fraction": 0.04},
 ]
 
-# CFG-Werte: 0 (leer), 1, 2 — CFG=3 zeigte im Vortest konsistent schlechteren PSNR
-CFG_SCALES = [0.0, 1.0, 2.0, 3.0]
-#CFG_SCALES = [1.0]
+# CFG-Werte: 0 (leer), 1, 2 — CFG=3 im first run konsistent schlechterer PSNR
+#CFG_SCALES = [0.0, 1.0, 2.0, 3.0]
+# DW, 28.5.2026 second run without 3.0 as CFG=3 showed worse PSNR (except for baseline uniform1d x4)
+CFG_SCALES = [0.0, 1.0, 2.0]
 
 # ---------------------------------------------------------------------------
-# GEMEINSAME PARAMETER
+# COMMON PARAMETERS
 # ---------------------------------------------------------------------------
 COMMON = {
     "pretrained_model_name_or_path": "./checkpoints/ContextMRI/MRI_checkpoint",
     "model_config":   "./configs/model_index.json",
-    "num_timesteps":  50,
+    #"num_timesteps":  50,
+    # DW, 28.5.2026 change for run 2 to 70
+    "num_timesteps":  70,
     "eta":            0.8,
     "gamma":          5.0,
     "CG_iter":        5,
@@ -123,11 +120,9 @@ COMMON = {
 RESULTS_JSON = "./results/knee_testplan_v2/all_results.json"
 
 
-# ---------------------------------------------------------------------------
-# METADATA-PROMPT-GENERIERUNG
-# Baut alle 5 Varianten aus den echten Scan-Metadaten.
-# Gibt ein Dict {variant_name: prompt_string} zurück.
-# ---------------------------------------------------------------------------
+# METADATA PROMT GENERATION
+# Dict {variant_name: prompt_string}
+
 def build_metadata_variants(scan: dict) -> dict:
     s = scan
     anatomy = "Knee"
@@ -136,9 +131,8 @@ def build_metadata_variants(scan: dict) -> dict:
     seq     = s["sequence"]
     tr, te, ti, fa = s["TR"], s["TE"], s["TI"], s["flip_angle"]
 
-    # Pathologie-String (None → kein Eintrag)
+    # path string (None → no entry)
     if s["pathology"]:
-        # Format wie im Training: "N Pathologie" bei Mehrfachnennung
         parts = [p.strip() for p in s["pathology"].split(",")]
         counts = {}
         for p in parts:
@@ -146,39 +140,41 @@ def build_metadata_variants(scan: dict) -> dict:
         path_str = ", ".join(f"{c} {p}" for p, c in counts.items())
         pathology_clause = f", Pathology: {path_str}"
     else:
-        pathology_clause = ""  # gesunder Scan
+        pathology_clause = ""  # healthy
 
     mr_clause = f", Sequence: {seq}, TR: {tr}, TE: {te}, TI: {ti}, Flip angle: {fa}"
 
     return {
-        # vollständige Metadaten (Goldstandard)
+        # all metadata
         "full":         f"{anatomy}, Slice {sl}, {contrast}{pathology_clause}{mr_clause}",
-        # ohne MR-Parameter
+        # no MR parameters
         "no_mr_params": f"{anatomy}, Slice {sl}, {contrast}{pathology_clause}",
-        # ohne Pathologie
+        # no pathology
         "no_pathology": f"{anatomy}, Slice {sl}, {contrast}{mr_clause}",
-        # nur Anatomie + Kontrast
+        # only Anatomie + Kontrast
         "anatomy_only": f"{anatomy}, Slice {sl}, {contrast}",
-        # leerer Prompt (entspricht cfg_scale=0, kein Text-Guidance)
+        # empty prompt equal to cfg_scale=0
         "empty":        "",
     }
 
 
-# ---------------------------------------------------------------------------
-# EXPERIMENT-LISTE
-# ---------------------------------------------------------------------------
+
+# EXPERIMENT LIST
 def build_experiment_list() -> list:
     experiments = []
+    METADATA_KEEP = {"empty", "full", "no_pathology"} # DW, 28.5.2026 for second run with best results from first run
     exp_id = 0
     for scan in SCANS:
         meta_variants = build_metadata_variants(scan)
         for mask_cfg in MASK_CONFIGS:
             for cfg_scale in CFG_SCALES:
                 for meta_name, prompt in meta_variants.items():
-                    # leerer Prompt nur bei cfg=0 sinnvoll
+                    if meta_name not in METADATA_KEEP:
+                        continue
+                    # empty prompt only with cfg=0
                     if meta_name == "empty" and cfg_scale > 0:
                         continue
-                    # nicht-leerer Prompt + cfg=0 → kein Text-Guidance, Prompt ignoriert
+                    # cfg=0 only with non emptyp prompt
                     if meta_name != "empty" and cfg_scale == 0:
                         continue
                     exp = {
@@ -199,10 +195,9 @@ def build_experiment_list() -> list:
     return experiments
 
 
-# ---------------------------------------------------------------------------
-# EINZELEXPERIMENT
-# ---------------------------------------------------------------------------
+# single EXPERIMENT
 def run_single_experiment(exp: dict) -> dict:
+    t0 = time.time()
     set_seed(exp["seed"])
 
     slice_str = f"{exp['slice']:03d}"
@@ -234,9 +229,9 @@ def run_single_experiment(exp: dict) -> dict:
     pipeline = pipeline.to(device)
     pipeline.scheduler = DDIMScheduler.from_config(pipeline.scheduler.config)
     pipeline.scheduler.set_timesteps(num_inference_steps=exp["num_timesteps"])
-    image_size = 512 if exp["mri_type"] == "skm-tea" else 320
+    image_size = 320 # for skm-tea 512 would be necessary
 
-    # Daten laden — Pfad aus Scan-Metadaten
+    # load data
     base = f"./assets/fastmri/knee/{exp['filename']}"
     x   = torch.tensor(np.load(f"{base}/slice/{slice_str}.npy")).unsqueeze(0).unsqueeze(0).to(device)
     mps = torch.tensor(np.load(f"{base}/mps/{slice_str}.npy")).unsqueeze(0).to(device)
@@ -282,6 +277,7 @@ def run_single_experiment(exp: dict) -> dict:
     psnr  = peak_signal_noise_ratio(x_np, recon_np)
     ssim  = calculate_ssim(x_np, recon_np)
     lpips = calculate_lpips(x_np, recon_np, device=device)
+    runtime = time.time() - t0
 
     result = {
         "exp_id":            exp["exp_id"],
@@ -302,18 +298,18 @@ def run_single_experiment(exp: dict) -> dict:
         "label_path":        str(save_dir / "label.png"),
         "input_path":        str(save_dir / "input.png"),
         "timestamp":         datetime.now().isoformat(),
+        "runtime_s": round(runtime, 1),
     }
     path_tag = "pathology" if exp["pathology_present"] else "  healthy  "
     print(f"[{exp['exp_id']:03d}] {exp['filename']} sl{exp['slice']:02d} "
           f"{path_tag} | {exp['mask_type']:12s} acc{exp['acc_factor']} "
           f"cfg{exp['cfg_scale']} {exp['meta_name']:15s} → "
-          f"PSNR={psnr:.2f} SSIM={ssim:.4f} LPIPS={lpips:.4f}")
+          f"PSNR={psnr:.2f} SSIM={ssim:.4f} LPIPS={lpips:.4f} ({runtime:.0f}s)")
     return result
 
 
-# ---------------------------------------------------------------------------
+
 # MODEL CACHE
-# ---------------------------------------------------------------------------
 _model_cache: dict = {}
 
 def _load_models(ckpt_path: str, mri_type: str, device):
@@ -328,9 +324,7 @@ def _load_models(ckpt_path: str, mri_type: str, device):
     return _model_cache[key]
 
 
-# ---------------------------------------------------------------------------
-# ERGEBNISSE SPEICHERN
-# ---------------------------------------------------------------------------
+# SAVE RESULTS
 def save_results(results: list, path: str):
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     with open(path, "w") as f:
@@ -338,11 +332,9 @@ def save_results(results: list, path: str):
     print(f"Results saved: {path}")
 
 
-# ---------------------------------------------------------------------------
+
 # HTML-REPORT
-# Gruppiert nach Scan, zeigt Pathologie-Info pro Zeile,
-# farbliche Unterscheidung gesund vs. pathologisch
-# ---------------------------------------------------------------------------
+# Gruppiert nach Scan, PSRN
 def generate_html_report(results: list, output_path: str):
 
     def psnr_class(v):
@@ -445,11 +437,10 @@ def _summary_rows(results: list) -> list:
     return rows
 
 
-# ---------------------------------------------------------------------------
-# VERGLEICHSPLOT
-# Mittlerer PSNR vs. CFG-Scale, eine Subplot pro Maske,
-# Linien nach Metadata-Variante, Mittelung über alle 6 Scans
-# ---------------------------------------------------------------------------
+
+# PLOT
+# Mittlerer PSNR vs. CFG-Scale über alle 6 Scans
+
 def generate_comparison_plot(results: list, output_path: str):
     fig, axes = plt.subplots(1, len(MASK_CONFIGS), figsize=(5 * len(MASK_CONFIGS), 4))
     if len(MASK_CONFIGS) == 1:
@@ -489,9 +480,7 @@ def generate_comparison_plot(results: list, output_path: str):
     print(f"Plot saved: {output_path}")
 
 
-# ---------------------------------------------------------------------------
 # MAIN
-# ---------------------------------------------------------------------------
 def main():
     startzeit = datetime.now()
     print("Start:", startzeit.strftime("%d.%m.%Y %H:%M:%S"))
@@ -541,7 +530,7 @@ def main():
         print(f"SSIM:      {best['ssim']:.4f}")
         print(f"LPIPS:     {best['lpips']:.4f}")
 
-        # Pathologie-Vergleich: zeigt ob full-Metadata bei pathol. Scans besser ist
+        # Compare pathology
         print(f"\navg. PSNR: full vs. anatomy_only (pathology status)")
         for has_path in [True, False]:
             label = "pathol." if has_path else "healthy"
