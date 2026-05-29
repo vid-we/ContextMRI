@@ -114,10 +114,10 @@ COMMON = {
     "CG_iter":        5,
     "mri_type":       "fastmri",
     "seed":           42,
-    "save_dir":       "./results/knee_testplan_v2",
+    "save_dir":       "./results/knee_testplan_v3",
 }
 
-RESULTS_JSON = "./results/knee_testplan_v2/all_results.json"
+RESULTS_JSON = "./results/knee_testplan_v3/all_results.json"
 
 
 # METADATA PROMT GENERATION
@@ -387,7 +387,7 @@ def generate_html_report(results: list, output_path: str):
 </style>
 </head>
 <body>
-<h1>ContextMRI - Knee Testplan v2</h1>
+<h1>ContextMRI - Knee Testplan v3</h1>
 <p>{datetime.now().strftime('%Y-%m-%d %H:%M')} | {len(results)} Experiments | 6 Scans (2 healthy, 4 pathol.) | 4 mask types</p>
 
 <h2>MASK: uniform1d x4 (Baseline) | gaussian1d x4 | gaussian2d x8 | poisson2d x8</h2>
@@ -473,7 +473,7 @@ def generate_comparison_plot(results: list, output_path: str):
         ax.legend(fontsize=7)
         ax.grid(alpha=0.3)
 
-    fig.suptitle("Knee v2: avg. PSNR vs. CFG scale (mean over 6 scans)", fontsize=11)
+    fig.suptitle("Knee v3: avg. PSNR vs. CFG scale (mean over 6 scans)", fontsize=11)
     plt.tight_layout()
     plt.savefig(output_path)
     plt.close()
