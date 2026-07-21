@@ -16,8 +16,8 @@ from mri.utils import real_to_nchw_comp, clear
 
 def main(args):
     
-    #DW, 12.4.2026: device = torch.device("cuda" if torch.cuda.is_available else "cpu")
-    device = torch.device("cpu")
+    #DW, 12.4.2026: added ()
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     tokenizer = CLIPTokenizer.from_pretrained(args.pretrained_model_name_or_path, subfolder="tokenizer")
     text_encoder = CLIPTextModel.from_pretrained(args.pretrained_model_name_or_path, subfolder="text_encoder")
     noise_scheduler = DDPMScheduler.from_pretrained(args.pretrained_model_name_or_path, subfolder="scheduler")

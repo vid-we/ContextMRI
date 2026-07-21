@@ -30,8 +30,9 @@ def main(args):
     args.save_dir.mkdir(exist_ok=True, parents=True)
     json_path = os.path.join(args.save_dir, "summary.json")
   
-    #device = torch.device("cuda" if torch.cuda.is_available else "cpu")
-    device = torch.device("cpu")
+    #DW, 1.4.2026: added ()
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    #device = torch.device("cpu")
     tokenizer = CLIPTokenizer.from_pretrained(args.pretrained_model_name_or_path, subfolder="tokenizer")
     text_encoder = CLIPTextModel.from_pretrained(args.pretrained_model_name_or_path, subfolder="text_encoder")
     noise_scheduler = DDPMScheduler.from_pretrained(args.pretrained_model_name_or_path, subfolder="scheduler")
@@ -208,7 +209,6 @@ if __name__=='__main__':
     parser.add_argument('--batch_size', default=1, type=int, help="To keep batch size = 1 if mps data is not always same shape")
     parser.add_argument('--mri_type', type=str, choices=["fastmri", "skm-tea"], default="fastmri")
     # DW, 17.5.2026 added
-    #parser.add_argument('--stage', type=str, default="val")
     #parser.add_argument('--use_clip', action='store_true', default=False)
     parser.add_argument('--model_config', type=str, default="./configs/model_index.json")
     

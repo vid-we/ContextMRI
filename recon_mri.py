@@ -25,8 +25,9 @@ def main(args):
     args.save_dir = Path(args.save_dir) / f"{args.mask_type}" / f"acc_{args.acc_factor}" / f"cfg{args.cfg_scale}" / f"eta{args.eta}"
     args.save_dir.mkdir(exist_ok=True, parents=True)
   
-    #DW, 1.4.2026: 
-    device = torch.device("cuda" if torch.cuda.is_available else "cpu")
+    #DW, 1.4.2026: add ()
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    #original: device = torch.device("cuda" if torch.cuda.is_available else "cpu")
     #device = torch.device("cpu")
     tokenizer = CLIPTokenizer.from_pretrained(args.pretrained_model_name_or_path, subfolder="tokenizer")
     text_encoder = CLIPTextModel.from_pretrained(args.pretrained_model_name_or_path, subfolder="text_encoder")

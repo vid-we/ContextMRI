@@ -1,0 +1,3187 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>ContextMRI Knee Testplan</title>
+<style>
+  body        { font-family: 'Courier New', monospace; background: #0f0f0f; color: #e0e0e0; padding: 2rem; }
+  h1, h2      { color: #e0e0e0; font-weight: normal; }
+  h2          { font-size: 0.9rem; margin-top: 2rem; color: #aaa; }
+  table       { border-collapse: collapse; width: 100%; margin-top: 1rem; font-size: 0.85rem; }
+  th          { background: #1e1e1e; padding: 8px 12px; text-align: left; border-bottom: 1px solid #333; }
+  td          { padding: 6px 12px; border-bottom: 1px solid #1a1a1a; }
+  tr:hover td { background: #1a1a1a; }
+  .scan-header td { background: #181818; color: #aaa; padding: 10px 12px 4px; font-size: 0.8rem; border-top: 1px solid #2a2a2a; }
+  .good       { font-weight: bold; }
+  .mid        { color: #aaa; }
+  .bad        { color: #888; }
+  .generated  { color: #555; font-size: 0.75rem; margin-top: 2rem; }
+</style>
+</head>
+<body>
+<h1>ContextMRI - Knee Testplan v2</h1>
+<p>2026-05-28 01:04 | 312 Experiments | 6 Scans (2 healthy, 4 pathol.) | 4 mask types</p>
+
+<h2>MASK: uniform1d x4 (Baseline) | gaussian1d x4 | gaussian2d x8 | poisson2d x8</h2>
+<h2>ALL EXPERIMENTS (sorted by scan,  PSNR)</h2>
+<table>
+  <thead>
+    <tr>
+      <th>#</th><th>Mask</th><th>Acc</th><th>CFG</th>
+      <th>Metadata</th><th>PSNR</th><th>SSIM</th><th>LPIPS</th>
+    </tr>
+  </thead>
+  <tbody>
+        <tr class="scan-header">
+          <td colspan="8">file1000033 | Slice 10 | PD | healthy</td>
+        </tr>
+        <tr>
+          <td>39</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">37.41</td>
+          <td>0.9735</td>
+          <td>0.1046</td>
+        </tr>
+        <tr>
+          <td>41</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">37.34</td>
+          <td>0.9732</td>
+          <td>0.1048</td>
+        </tr>
+        <tr>
+          <td>43</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">37.34</td>
+          <td>0.9732</td>
+          <td>0.1048</td>
+        </tr>
+        <tr>
+          <td>45</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">37.26</td>
+          <td>0.9730</td>
+          <td>0.1050</td>
+        </tr>
+        <tr>
+          <td>47</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">37.26</td>
+          <td>0.9730</td>
+          <td>0.1050</td>
+        </tr>
+        <tr>
+          <td>40</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">37.25</td>
+          <td>0.9729</td>
+          <td>0.1060</td>
+        </tr>
+        <tr>
+          <td>42</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">37.25</td>
+          <td>0.9729</td>
+          <td>0.1060</td>
+        </tr>
+        <tr>
+          <td>49</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">37.21</td>
+          <td>0.9727</td>
+          <td>0.1051</td>
+        </tr>
+        <tr>
+          <td>51</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">37.21</td>
+          <td>0.9727</td>
+          <td>0.1051</td>
+        </tr>
+        <tr>
+          <td>44</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">37.14</td>
+          <td>0.9724</td>
+          <td>0.1075</td>
+        </tr>
+        <tr>
+          <td>46</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">37.14</td>
+          <td>0.9724</td>
+          <td>0.1075</td>
+        </tr>
+        <tr>
+          <td>48</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">36.87</td>
+          <td>0.9716</td>
+          <td>0.1097</td>
+        </tr>
+        <tr>
+          <td>50</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">36.87</td>
+          <td>0.9716</td>
+          <td>0.1097</td>
+        </tr>
+        <tr>
+          <td>18</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">35.81</td>
+          <td>0.9633</td>
+          <td>0.1361</td>
+        </tr>
+        <tr>
+          <td>20</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">35.81</td>
+          <td>0.9633</td>
+          <td>0.1361</td>
+        </tr>
+        <tr>
+          <td>22</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">35.80</td>
+          <td>0.9629</td>
+          <td>0.1380</td>
+        </tr>
+        <tr>
+          <td>24</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">35.80</td>
+          <td>0.9629</td>
+          <td>0.1380</td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">35.79</td>
+          <td>0.9633</td>
+          <td>0.1349</td>
+        </tr>
+        <tr>
+          <td>16</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">35.79</td>
+          <td>0.9633</td>
+          <td>0.1349</td>
+        </tr>
+        <tr>
+          <td>23</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">35.79</td>
+          <td>0.9631</td>
+          <td>0.1356</td>
+        </tr>
+        <tr>
+          <td>25</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">35.79</td>
+          <td>0.9631</td>
+          <td>0.1356</td>
+        </tr>
+        <tr>
+          <td>19</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">35.78</td>
+          <td>0.9633</td>
+          <td>0.1346</td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">35.78</td>
+          <td>0.9633</td>
+          <td>0.1346</td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">35.77</td>
+          <td>0.9633</td>
+          <td>0.1341</td>
+        </tr>
+        <tr>
+          <td>17</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">35.77</td>
+          <td>0.9633</td>
+          <td>0.1341</td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">35.74</td>
+          <td>0.9633</td>
+          <td>0.1346</td>
+        </tr>
+        <tr>
+          <td>26</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">34.88</td>
+          <td>0.9491</td>
+          <td>0.1715</td>
+        </tr>
+        <tr>
+          <td>27</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">34.79</td>
+          <td>0.9484</td>
+          <td>0.1757</td>
+        </tr>
+        <tr>
+          <td>29</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.79</td>
+          <td>0.9484</td>
+          <td>0.1757</td>
+        </tr>
+        <tr>
+          <td>28</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">34.74</td>
+          <td>0.9486</td>
+          <td>0.1721</td>
+        </tr>
+        <tr>
+          <td>30</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.74</td>
+          <td>0.9486</td>
+          <td>0.1721</td>
+        </tr>
+        <tr>
+          <td>31</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">34.67</td>
+          <td>0.9475</td>
+          <td>0.1806</td>
+        </tr>
+        <tr>
+          <td>33</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.67</td>
+          <td>0.9475</td>
+          <td>0.1806</td>
+        </tr>
+        <tr>
+          <td>32</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">34.60</td>
+          <td>0.9482</td>
+          <td>0.1728</td>
+        </tr>
+        <tr>
+          <td>34</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.60</td>
+          <td>0.9482</td>
+          <td>0.1728</td>
+        </tr>
+        <tr>
+          <td>35</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">34.54</td>
+          <td>0.9464</td>
+          <td>0.1863</td>
+        </tr>
+        <tr>
+          <td>37</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.54</td>
+          <td>0.9464</td>
+          <td>0.1863</td>
+        </tr>
+        <tr>
+          <td>36</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">34.45</td>
+          <td>0.9474</td>
+          <td>0.1741</td>
+        </tr>
+        <tr>
+          <td>38</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.45</td>
+          <td>0.9474</td>
+          <td>0.1741</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="mid">31.79</td>
+          <td>0.9303</td>
+          <td>0.2064</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="mid">31.70</td>
+          <td>0.9289</td>
+          <td>0.2027</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">31.69</td>
+          <td>0.9293</td>
+          <td>0.2054</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">31.65</td>
+          <td>0.9296</td>
+          <td>0.2043</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">31.65</td>
+          <td>0.9296</td>
+          <td>0.2043</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="mid">31.65</td>
+          <td>0.9253</td>
+          <td>0.2024</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="mid">31.63</td>
+          <td>0.9286</td>
+          <td>0.2065</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="mid">31.63</td>
+          <td>0.9286</td>
+          <td>0.2065</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">31.60</td>
+          <td>0.9232</td>
+          <td>0.2054</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">31.55</td>
+          <td>0.9271</td>
+          <td>0.2093</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">31.55</td>
+          <td>0.9271</td>
+          <td>0.2093</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="mid">31.50</td>
+          <td>0.9273</td>
+          <td>0.2087</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="mid">31.50</td>
+          <td>0.9273</td>
+          <td>0.2087</td>
+        </tr>
+        <tr class="scan-header">
+          <td colspan="8">file1001126 | Slice 26 | PD | Pathology: Cartilage - Partial Thickness loss/defect, Meniscus Tear, Bone- Subchondral edema</td>
+        </tr>
+        <tr>
+          <td>100</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">36.36</td>
+          <td>0.9683</td>
+          <td>0.0930</td>
+        </tr>
+        <tr>
+          <td>98</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">36.35</td>
+          <td>0.9679</td>
+          <td>0.0907</td>
+        </tr>
+        <tr>
+          <td>96</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">36.35</td>
+          <td>0.9678</td>
+          <td>0.0910</td>
+        </tr>
+        <tr>
+          <td>102</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">36.34</td>
+          <td>0.9683</td>
+          <td>0.0929</td>
+        </tr>
+        <tr>
+          <td>94</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">36.29</td>
+          <td>0.9670</td>
+          <td>0.0896</td>
+        </tr>
+        <tr>
+          <td>92</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">36.28</td>
+          <td>0.9670</td>
+          <td>0.0897</td>
+        </tr>
+        <tr>
+          <td>97</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">36.27</td>
+          <td>0.9671</td>
+          <td>0.0907</td>
+        </tr>
+        <tr>
+          <td>101</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">36.27</td>
+          <td>0.9675</td>
+          <td>0.0923</td>
+        </tr>
+        <tr>
+          <td>93</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">36.22</td>
+          <td>0.9666</td>
+          <td>0.0898</td>
+        </tr>
+        <tr>
+          <td>99</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">36.22</td>
+          <td>0.9668</td>
+          <td>0.0904</td>
+        </tr>
+        <tr>
+          <td>103</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">36.20</td>
+          <td>0.9669</td>
+          <td>0.0913</td>
+        </tr>
+        <tr>
+          <td>95</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">36.19</td>
+          <td>0.9663</td>
+          <td>0.0898</td>
+        </tr>
+        <tr>
+          <td>91</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">36.13</td>
+          <td>0.9658</td>
+          <td>0.0895</td>
+        </tr>
+        <tr>
+          <td>76</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="mid">31.89</td>
+          <td>0.9353</td>
+          <td>0.1395</td>
+        </tr>
+        <tr>
+          <td>74</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="mid">31.87</td>
+          <td>0.9348</td>
+          <td>0.1400</td>
+        </tr>
+        <tr>
+          <td>89</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="mid">31.86</td>
+          <td>0.9274</td>
+          <td>0.1715</td>
+        </tr>
+        <tr>
+          <td>75</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">31.79</td>
+          <td>0.9331</td>
+          <td>0.1382</td>
+        </tr>
+        <tr>
+          <td>72</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="mid">31.74</td>
+          <td>0.9335</td>
+          <td>0.1373</td>
+        </tr>
+        <tr>
+          <td>70</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="mid">31.73</td>
+          <td>0.9333</td>
+          <td>0.1375</td>
+        </tr>
+        <tr>
+          <td>85</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="mid">31.73</td>
+          <td>0.9263</td>
+          <td>0.1646</td>
+        </tr>
+        <tr>
+          <td>77</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">31.71</td>
+          <td>0.9320</td>
+          <td>0.1387</td>
+        </tr>
+        <tr>
+          <td>87</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="mid">31.70</td>
+          <td>0.9268</td>
+          <td>0.1727</td>
+        </tr>
+        <tr>
+          <td>71</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">31.67</td>
+          <td>0.9318</td>
+          <td>0.1370</td>
+        </tr>
+        <tr>
+          <td>83</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="mid">31.66</td>
+          <td>0.9258</td>
+          <td>0.1649</td>
+        </tr>
+        <tr>
+          <td>81</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="mid">31.62</td>
+          <td>0.9246</td>
+          <td>0.1586</td>
+        </tr>
+        <tr>
+          <td>73</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">31.61</td>
+          <td>0.9310</td>
+          <td>0.1374</td>
+        </tr>
+        <tr>
+          <td>79</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="mid">31.58</td>
+          <td>0.9245</td>
+          <td>0.1590</td>
+        </tr>
+        <tr>
+          <td>88</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">31.55</td>
+          <td>0.9257</td>
+          <td>0.1657</td>
+        </tr>
+        <tr>
+          <td>84</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">31.54</td>
+          <td>0.9251</td>
+          <td>0.1610</td>
+        </tr>
+        <tr>
+          <td>68</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="mid">31.53</td>
+          <td>0.9310</td>
+          <td>0.1366</td>
+        </tr>
+        <tr>
+          <td>66</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="mid">31.53</td>
+          <td>0.9309</td>
+          <td>0.1368</td>
+        </tr>
+        <tr>
+          <td>80</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">31.49</td>
+          <td>0.9239</td>
+          <td>0.1572</td>
+        </tr>
+        <tr>
+          <td>67</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">31.49</td>
+          <td>0.9299</td>
+          <td>0.1369</td>
+        </tr>
+        <tr>
+          <td>69</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">31.46</td>
+          <td>0.9294</td>
+          <td>0.1371</td>
+        </tr>
+        <tr>
+          <td>82</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">31.44</td>
+          <td>0.9234</td>
+          <td>0.1562</td>
+        </tr>
+        <tr>
+          <td>78</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="mid">31.42</td>
+          <td>0.9225</td>
+          <td>0.1548</td>
+        </tr>
+        <tr>
+          <td>86</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">31.40</td>
+          <td>0.9241</td>
+          <td>0.1581</td>
+        </tr>
+        <tr>
+          <td>90</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">31.38</td>
+          <td>0.9243</td>
+          <td>0.1609</td>
+        </tr>
+        <tr>
+          <td>65</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="mid">31.23</td>
+          <td>0.9272</td>
+          <td>0.1379</td>
+        </tr>
+        <tr>
+          <td>63</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="mid">30.51</td>
+          <td>0.9085</td>
+          <td>0.1969</td>
+        </tr>
+        <tr>
+          <td>61</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="mid">30.48</td>
+          <td>0.9076</td>
+          <td>0.1991</td>
+        </tr>
+        <tr>
+          <td>59</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="mid">30.48</td>
+          <td>0.9072</td>
+          <td>0.1945</td>
+        </tr>
+        <tr>
+          <td>53</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="mid">30.13</td>
+          <td>0.9015</td>
+          <td>0.1983</td>
+        </tr>
+        <tr>
+          <td>64</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="bad">29.89</td>
+          <td>0.8975</td>
+          <td>0.2087</td>
+        </tr>
+        <tr>
+          <td>57</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="bad">29.78</td>
+          <td>0.8986</td>
+          <td>0.2092</td>
+        </tr>
+        <tr>
+          <td>58</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="bad">29.63</td>
+          <td>0.8950</td>
+          <td>0.2120</td>
+        </tr>
+        <tr>
+          <td>62</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="bad">29.37</td>
+          <td>0.8884</td>
+          <td>0.2258</td>
+        </tr>
+        <tr>
+          <td>60</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="bad">29.19</td>
+          <td>0.8906</td>
+          <td>0.2149</td>
+        </tr>
+        <tr>
+          <td>52</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="bad">29.08</td>
+          <td>0.8825</td>
+          <td>0.2190</td>
+        </tr>
+        <tr>
+          <td>56</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="bad">29.05</td>
+          <td>0.8861</td>
+          <td>0.2197</td>
+        </tr>
+        <tr>
+          <td>54</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="bad">28.54</td>
+          <td>0.8844</td>
+          <td>0.2207</td>
+        </tr>
+        <tr>
+          <td>55</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="bad">11.72</td>
+          <td>0.1872</td>
+          <td>0.6978</td>
+        </tr>
+        <tr class="scan-header">
+          <td colspan="8">file1001184 | Slice 18 | PD | Pathology: Meniscus Tear, Displaced Meniscal Tissue, Ligament - ACL High Grade Sprain</td>
+        </tr>
+        <tr>
+          <td>154</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">39.54</td>
+          <td>0.9788</td>
+          <td>0.0908</td>
+        </tr>
+        <tr>
+          <td>152</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">39.53</td>
+          <td>0.9787</td>
+          <td>0.0911</td>
+        </tr>
+        <tr>
+          <td>150</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">39.50</td>
+          <td>0.9788</td>
+          <td>0.0896</td>
+        </tr>
+        <tr>
+          <td>148</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">39.49</td>
+          <td>0.9788</td>
+          <td>0.0900</td>
+        </tr>
+        <tr>
+          <td>146</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">39.43</td>
+          <td>0.9787</td>
+          <td>0.0893</td>
+        </tr>
+        <tr>
+          <td>144</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">39.43</td>
+          <td>0.9786</td>
+          <td>0.0894</td>
+        </tr>
+        <tr>
+          <td>149</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">39.36</td>
+          <td>0.9784</td>
+          <td>0.0892</td>
+        </tr>
+        <tr>
+          <td>145</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">39.35</td>
+          <td>0.9785</td>
+          <td>0.0891</td>
+        </tr>
+        <tr>
+          <td>151</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">39.35</td>
+          <td>0.9784</td>
+          <td>0.0891</td>
+        </tr>
+        <tr>
+          <td>153</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">39.34</td>
+          <td>0.9784</td>
+          <td>0.0895</td>
+        </tr>
+        <tr>
+          <td>147</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">39.34</td>
+          <td>0.9784</td>
+          <td>0.0891</td>
+        </tr>
+        <tr>
+          <td>155</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">39.34</td>
+          <td>0.9783</td>
+          <td>0.0894</td>
+        </tr>
+        <tr>
+          <td>143</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">39.32</td>
+          <td>0.9783</td>
+          <td>0.0894</td>
+        </tr>
+        <tr>
+          <td>128</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">35.72</td>
+          <td>0.9619</td>
+          <td>0.1311</td>
+        </tr>
+        <tr>
+          <td>124</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">35.71</td>
+          <td>0.9615</td>
+          <td>0.1296</td>
+        </tr>
+        <tr>
+          <td>126</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">35.69</td>
+          <td>0.9617</td>
+          <td>0.1316</td>
+        </tr>
+        <tr>
+          <td>122</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">35.68</td>
+          <td>0.9614</td>
+          <td>0.1299</td>
+        </tr>
+        <tr>
+          <td>125</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">35.58</td>
+          <td>0.9604</td>
+          <td>0.1289</td>
+        </tr>
+        <tr>
+          <td>120</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">35.58</td>
+          <td>0.9607</td>
+          <td>0.1288</td>
+        </tr>
+        <tr>
+          <td>123</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">35.57</td>
+          <td>0.9604</td>
+          <td>0.1288</td>
+        </tr>
+        <tr>
+          <td>118</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">35.55</td>
+          <td>0.9606</td>
+          <td>0.1289</td>
+        </tr>
+        <tr>
+          <td>121</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">35.53</td>
+          <td>0.9601</td>
+          <td>0.1286</td>
+        </tr>
+        <tr>
+          <td>127</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">35.52</td>
+          <td>0.9604</td>
+          <td>0.1296</td>
+        </tr>
+        <tr>
+          <td>119</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">35.51</td>
+          <td>0.9601</td>
+          <td>0.1285</td>
+        </tr>
+        <tr>
+          <td>129</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">35.48</td>
+          <td>0.9605</td>
+          <td>0.1297</td>
+        </tr>
+        <tr>
+          <td>117</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">35.34</td>
+          <td>0.9594</td>
+          <td>0.1289</td>
+        </tr>
+        <tr>
+          <td>130</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">34.97</td>
+          <td>0.9517</td>
+          <td>0.1564</td>
+        </tr>
+        <tr>
+          <td>133</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.94</td>
+          <td>0.9521</td>
+          <td>0.1588</td>
+        </tr>
+        <tr>
+          <td>131</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">34.93</td>
+          <td>0.9520</td>
+          <td>0.1592</td>
+        </tr>
+        <tr>
+          <td>134</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.91</td>
+          <td>0.9515</td>
+          <td>0.1566</td>
+        </tr>
+        <tr>
+          <td>132</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">34.91</td>
+          <td>0.9516</td>
+          <td>0.1569</td>
+        </tr>
+        <tr>
+          <td>136</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">34.79</td>
+          <td>0.9513</td>
+          <td>0.1576</td>
+        </tr>
+        <tr>
+          <td>138</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.79</td>
+          <td>0.9512</td>
+          <td>0.1573</td>
+        </tr>
+        <tr>
+          <td>137</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.79</td>
+          <td>0.9521</td>
+          <td>0.1620</td>
+        </tr>
+        <tr>
+          <td>135</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">34.78</td>
+          <td>0.9520</td>
+          <td>0.1625</td>
+        </tr>
+        <tr>
+          <td>140</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">34.62</td>
+          <td>0.9508</td>
+          <td>0.1590</td>
+        </tr>
+        <tr>
+          <td>142</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.61</td>
+          <td>0.9507</td>
+          <td>0.1583</td>
+        </tr>
+        <tr>
+          <td>141</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.61</td>
+          <td>0.9520</td>
+          <td>0.1673</td>
+        </tr>
+        <tr>
+          <td>139</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">34.60</td>
+          <td>0.9518</td>
+          <td>0.1684</td>
+        </tr>
+        <tr>
+          <td>115</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">33.28</td>
+          <td>0.9347</td>
+          <td>0.2022</td>
+        </tr>
+        <tr>
+          <td>107</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">33.27</td>
+          <td>0.9336</td>
+          <td>0.2004</td>
+        </tr>
+        <tr>
+          <td>111</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">33.25</td>
+          <td>0.9340</td>
+          <td>0.2018</td>
+        </tr>
+        <tr>
+          <td>105</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">33.22</td>
+          <td>0.9329</td>
+          <td>0.2011</td>
+        </tr>
+        <tr>
+          <td>109</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">33.21</td>
+          <td>0.9337</td>
+          <td>0.2007</td>
+        </tr>
+        <tr>
+          <td>108</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">33.21</td>
+          <td>0.9321</td>
+          <td>0.2022</td>
+        </tr>
+        <tr>
+          <td>112</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">33.19</td>
+          <td>0.9321</td>
+          <td>0.2038</td>
+        </tr>
+        <tr>
+          <td>116</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">33.17</td>
+          <td>0.9318</td>
+          <td>0.2056</td>
+        </tr>
+        <tr>
+          <td>106</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">33.17</td>
+          <td>0.9317</td>
+          <td>0.2028</td>
+        </tr>
+        <tr>
+          <td>104</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">33.13</td>
+          <td>0.9311</td>
+          <td>0.2028</td>
+        </tr>
+        <tr>
+          <td>113</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">33.11</td>
+          <td>0.9329</td>
+          <td>0.2046</td>
+        </tr>
+        <tr>
+          <td>110</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">33.09</td>
+          <td>0.9309</td>
+          <td>0.2056</td>
+        </tr>
+        <tr>
+          <td>114</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">33.00</td>
+          <td>0.9298</td>
+          <td>0.2092</td>
+        </tr>
+        <tr class="scan-header">
+          <td colspan="8">file1001429 | Slice 16 | PDFS | Pathology: Cartilage - Partial Thickness loss/defect, Bone- Subchondral edema</td>
+        </tr>
+        <tr>
+          <td>249</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">36.65</td>
+          <td>0.9561</td>
+          <td>0.1239</td>
+        </tr>
+        <tr>
+          <td>247</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">36.65</td>
+          <td>0.9556</td>
+          <td>0.1258</td>
+        </tr>
+        <tr>
+          <td>248</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">36.62</td>
+          <td>0.9553</td>
+          <td>0.1276</td>
+        </tr>
+        <tr>
+          <td>250</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">36.61</td>
+          <td>0.9551</td>
+          <td>0.1279</td>
+        </tr>
+        <tr>
+          <td>254</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">36.59</td>
+          <td>0.9551</td>
+          <td>0.1296</td>
+        </tr>
+        <tr>
+          <td>252</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">36.58</td>
+          <td>0.9551</td>
+          <td>0.1296</td>
+        </tr>
+        <tr>
+          <td>251</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">36.51</td>
+          <td>0.9547</td>
+          <td>0.1267</td>
+        </tr>
+        <tr>
+          <td>258</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">36.49</td>
+          <td>0.9546</td>
+          <td>0.1315</td>
+        </tr>
+        <tr>
+          <td>256</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">36.47</td>
+          <td>0.9545</td>
+          <td>0.1317</td>
+        </tr>
+        <tr>
+          <td>259</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">36.39</td>
+          <td>0.9538</td>
+          <td>0.1289</td>
+        </tr>
+        <tr>
+          <td>253</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">36.36</td>
+          <td>0.9540</td>
+          <td>0.1274</td>
+        </tr>
+        <tr>
+          <td>255</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">36.27</td>
+          <td>0.9533</td>
+          <td>0.1315</td>
+        </tr>
+        <tr>
+          <td>257</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">36.25</td>
+          <td>0.9534</td>
+          <td>0.1290</td>
+        </tr>
+        <tr>
+          <td>232</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.61</td>
+          <td>0.9389</td>
+          <td>0.1492</td>
+        </tr>
+        <tr>
+          <td>228</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.59</td>
+          <td>0.9387</td>
+          <td>0.1476</td>
+        </tr>
+        <tr>
+          <td>226</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">34.56</td>
+          <td>0.9386</td>
+          <td>0.1476</td>
+        </tr>
+        <tr>
+          <td>230</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">34.55</td>
+          <td>0.9386</td>
+          <td>0.1492</td>
+        </tr>
+        <tr>
+          <td>224</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.55</td>
+          <td>0.9381</td>
+          <td>0.1469</td>
+        </tr>
+        <tr>
+          <td>222</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">34.53</td>
+          <td>0.9380</td>
+          <td>0.1470</td>
+        </tr>
+        <tr>
+          <td>221</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">34.47</td>
+          <td>0.9371</td>
+          <td>0.1473</td>
+        </tr>
+        <tr>
+          <td>223</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">34.45</td>
+          <td>0.9370</td>
+          <td>0.1473</td>
+        </tr>
+        <tr>
+          <td>225</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.43</td>
+          <td>0.9368</td>
+          <td>0.1474</td>
+        </tr>
+        <tr>
+          <td>227</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">34.39</td>
+          <td>0.9365</td>
+          <td>0.1479</td>
+        </tr>
+        <tr>
+          <td>229</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.36</td>
+          <td>0.9362</td>
+          <td>0.1483</td>
+        </tr>
+        <tr>
+          <td>231</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">34.32</td>
+          <td>0.9360</td>
+          <td>0.1491</td>
+        </tr>
+        <tr>
+          <td>233</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.30</td>
+          <td>0.9356</td>
+          <td>0.1497</td>
+        </tr>
+        <tr>
+          <td>245</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.24</td>
+          <td>0.9234</td>
+          <td>0.1960</td>
+        </tr>
+        <tr>
+          <td>241</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.24</td>
+          <td>0.9228</td>
+          <td>0.1960</td>
+        </tr>
+        <tr>
+          <td>239</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">34.20</td>
+          <td>0.9224</td>
+          <td>0.1976</td>
+        </tr>
+        <tr>
+          <td>243</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">34.13</td>
+          <td>0.9213</td>
+          <td>0.2004</td>
+        </tr>
+        <tr>
+          <td>237</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.03</td>
+          <td>0.9200</td>
+          <td>0.2035</td>
+        </tr>
+        <tr>
+          <td>242</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.00</td>
+          <td>0.9212</td>
+          <td>0.1859</td>
+        </tr>
+        <tr>
+          <td>240</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">33.99</td>
+          <td>0.9210</td>
+          <td>0.1874</td>
+        </tr>
+        <tr>
+          <td>235</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">33.98</td>
+          <td>0.9193</td>
+          <td>0.2056</td>
+        </tr>
+        <tr>
+          <td>246</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">33.95</td>
+          <td>0.9215</td>
+          <td>0.1821</td>
+        </tr>
+        <tr>
+          <td>244</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">33.85</td>
+          <td>0.9195</td>
+          <td>0.1901</td>
+        </tr>
+        <tr>
+          <td>236</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">33.08</td>
+          <td>0.9089</td>
+          <td>0.2351</td>
+        </tr>
+        <tr>
+          <td>234</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="mid">32.68</td>
+          <td>0.8984</td>
+          <td>0.2583</td>
+        </tr>
+        <tr>
+          <td>213</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="mid">32.27</td>
+          <td>0.9207</td>
+          <td>0.2146</td>
+        </tr>
+        <tr>
+          <td>215</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="mid">32.24</td>
+          <td>0.9207</td>
+          <td>0.2149</td>
+        </tr>
+        <tr>
+          <td>211</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="mid">32.19</td>
+          <td>0.9203</td>
+          <td>0.2147</td>
+        </tr>
+        <tr>
+          <td>209</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="mid">32.16</td>
+          <td>0.9202</td>
+          <td>0.2149</td>
+        </tr>
+        <tr>
+          <td>219</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="mid">32.09</td>
+          <td>0.9215</td>
+          <td>0.2141</td>
+        </tr>
+        <tr>
+          <td>217</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="mid">32.07</td>
+          <td>0.9205</td>
+          <td>0.2155</td>
+        </tr>
+        <tr>
+          <td>214</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">32.07</td>
+          <td>0.9181</td>
+          <td>0.2174</td>
+        </tr>
+        <tr>
+          <td>210</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">32.05</td>
+          <td>0.9187</td>
+          <td>0.2157</td>
+        </tr>
+        <tr>
+          <td>216</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">32.02</td>
+          <td>0.9180</td>
+          <td>0.2175</td>
+        </tr>
+        <tr>
+          <td>212</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">32.01</td>
+          <td>0.9184</td>
+          <td>0.2161</td>
+        </tr>
+        <tr>
+          <td>208</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="mid">31.96</td>
+          <td>0.9189</td>
+          <td>0.2159</td>
+        </tr>
+        <tr>
+          <td>218</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">31.81</td>
+          <td>0.9163</td>
+          <td>0.2196</td>
+        </tr>
+        <tr>
+          <td>220</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">31.67</td>
+          <td>0.9166</td>
+          <td>0.2194</td>
+        </tr>
+        <tr>
+          <td>238</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="bad">28.44</td>
+          <td>0.7671</td>
+          <td>0.3606</td>
+        </tr>
+        <tr class="scan-header">
+          <td colspan="8">file1001429 | Slice 20 | PDFS | healthy</td>
+        </tr>
+        <tr>
+          <td>196</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">35.65</td>
+          <td>0.9460</td>
+          <td>0.1264</td>
+        </tr>
+        <tr>
+          <td>198</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">35.65</td>
+          <td>0.9460</td>
+          <td>0.1264</td>
+        </tr>
+        <tr>
+          <td>200</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">35.49</td>
+          <td>0.9439</td>
+          <td>0.1323</td>
+        </tr>
+        <tr>
+          <td>202</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">35.49</td>
+          <td>0.9439</td>
+          <td>0.1323</td>
+        </tr>
+        <tr>
+          <td>195</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">35.48</td>
+          <td>0.9442</td>
+          <td>0.1277</td>
+        </tr>
+        <tr>
+          <td>204</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">35.43</td>
+          <td>0.9431</td>
+          <td>0.1346</td>
+        </tr>
+        <tr>
+          <td>206</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">35.43</td>
+          <td>0.9431</td>
+          <td>0.1346</td>
+        </tr>
+        <tr>
+          <td>197</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">35.38</td>
+          <td>0.9429</td>
+          <td>0.1282</td>
+        </tr>
+        <tr>
+          <td>199</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">35.38</td>
+          <td>0.9429</td>
+          <td>0.1282</td>
+        </tr>
+        <tr>
+          <td>201</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">34.91</td>
+          <td>0.9369</td>
+          <td>0.1379</td>
+        </tr>
+        <tr>
+          <td>203</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.91</td>
+          <td>0.9369</td>
+          <td>0.1379</td>
+        </tr>
+        <tr>
+          <td>205</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">34.68</td>
+          <td>0.9344</td>
+          <td>0.1382</td>
+        </tr>
+        <tr>
+          <td>207</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.68</td>
+          <td>0.9344</td>
+          <td>0.1382</td>
+        </tr>
+        <tr>
+          <td>178</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">33.81</td>
+          <td>0.9260</td>
+          <td>0.1565</td>
+        </tr>
+        <tr>
+          <td>180</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">33.81</td>
+          <td>0.9260</td>
+          <td>0.1565</td>
+        </tr>
+        <tr>
+          <td>174</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">33.73</td>
+          <td>0.9243</td>
+          <td>0.1537</td>
+        </tr>
+        <tr>
+          <td>176</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">33.73</td>
+          <td>0.9243</td>
+          <td>0.1537</td>
+        </tr>
+        <tr>
+          <td>170</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">33.62</td>
+          <td>0.9223</td>
+          <td>0.1522</td>
+        </tr>
+        <tr>
+          <td>172</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">33.62</td>
+          <td>0.9223</td>
+          <td>0.1522</td>
+        </tr>
+        <tr>
+          <td>169</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">33.49</td>
+          <td>0.9198</td>
+          <td>0.1518</td>
+        </tr>
+        <tr>
+          <td>171</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">33.45</td>
+          <td>0.9192</td>
+          <td>0.1517</td>
+        </tr>
+        <tr>
+          <td>173</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">33.45</td>
+          <td>0.9192</td>
+          <td>0.1517</td>
+        </tr>
+        <tr>
+          <td>175</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">33.40</td>
+          <td>0.9185</td>
+          <td>0.1521</td>
+        </tr>
+        <tr>
+          <td>177</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">33.40</td>
+          <td>0.9185</td>
+          <td>0.1521</td>
+        </tr>
+        <tr>
+          <td>179</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">33.34</td>
+          <td>0.9177</td>
+          <td>0.1530</td>
+        </tr>
+        <tr>
+          <td>181</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">33.34</td>
+          <td>0.9177</td>
+          <td>0.1530</td>
+        </tr>
+        <tr>
+          <td>182</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">33.06</td>
+          <td>0.9103</td>
+          <td>0.1891</td>
+        </tr>
+        <tr>
+          <td>183</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">33.05</td>
+          <td>0.9102</td>
+          <td>0.1908</td>
+        </tr>
+        <tr>
+          <td>185</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">33.05</td>
+          <td>0.9102</td>
+          <td>0.1908</td>
+        </tr>
+        <tr>
+          <td>187</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="mid">32.99</td>
+          <td>0.9093</td>
+          <td>0.1905</td>
+        </tr>
+        <tr>
+          <td>189</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="mid">32.99</td>
+          <td>0.9093</td>
+          <td>0.1905</td>
+        </tr>
+        <tr>
+          <td>191</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="mid">32.91</td>
+          <td>0.9084</td>
+          <td>0.1918</td>
+        </tr>
+        <tr>
+          <td>193</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="mid">32.91</td>
+          <td>0.9084</td>
+          <td>0.1918</td>
+        </tr>
+        <tr>
+          <td>184</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">32.87</td>
+          <td>0.9077</td>
+          <td>0.1848</td>
+        </tr>
+        <tr>
+          <td>186</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">32.87</td>
+          <td>0.9077</td>
+          <td>0.1848</td>
+        </tr>
+        <tr>
+          <td>188</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">32.67</td>
+          <td>0.9049</td>
+          <td>0.1815</td>
+        </tr>
+        <tr>
+          <td>190</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">32.67</td>
+          <td>0.9049</td>
+          <td>0.1815</td>
+        </tr>
+        <tr>
+          <td>165</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="mid">32.53</td>
+          <td>0.9101</td>
+          <td>0.2058</td>
+        </tr>
+        <tr>
+          <td>167</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="mid">32.53</td>
+          <td>0.9101</td>
+          <td>0.2058</td>
+        </tr>
+        <tr>
+          <td>161</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="mid">32.48</td>
+          <td>0.9090</td>
+          <td>0.2047</td>
+        </tr>
+        <tr>
+          <td>163</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="mid">32.48</td>
+          <td>0.9090</td>
+          <td>0.2047</td>
+        </tr>
+        <tr>
+          <td>192</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">32.47</td>
+          <td>0.9019</td>
+          <td>0.1794</td>
+        </tr>
+        <tr>
+          <td>194</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">32.47</td>
+          <td>0.9019</td>
+          <td>0.1794</td>
+        </tr>
+        <tr>
+          <td>157</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="mid">32.40</td>
+          <td>0.9072</td>
+          <td>0.2049</td>
+        </tr>
+        <tr>
+          <td>159</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="mid">32.40</td>
+          <td>0.9072</td>
+          <td>0.2049</td>
+        </tr>
+        <tr>
+          <td>156</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="mid">32.21</td>
+          <td>0.9033</td>
+          <td>0.2078</td>
+        </tr>
+        <tr>
+          <td>158</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">32.21</td>
+          <td>0.9031</td>
+          <td>0.2064</td>
+        </tr>
+        <tr>
+          <td>160</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">32.21</td>
+          <td>0.9031</td>
+          <td>0.2064</td>
+        </tr>
+        <tr>
+          <td>162</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">32.14</td>
+          <td>0.9016</td>
+          <td>0.2068</td>
+        </tr>
+        <tr>
+          <td>164</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">32.14</td>
+          <td>0.9016</td>
+          <td>0.2068</td>
+        </tr>
+        <tr>
+          <td>166</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">32.04</td>
+          <td>0.8998</td>
+          <td>0.2083</td>
+        </tr>
+        <tr>
+          <td>168</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">32.04</td>
+          <td>0.8998</td>
+          <td>0.2083</td>
+        </tr>
+        <tr class="scan-header">
+          <td colspan="8">file1001655 | Slice 19 | PDFS | Pathology: Ligament - ACL High Grade Sprain, Bone-Fracture/Contusion/dislocation</td>
+        </tr>
+        <tr>
+          <td>304</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">38.38</td>
+          <td>0.9708</td>
+          <td>0.0979</td>
+        </tr>
+        <tr>
+          <td>310</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">38.32</td>
+          <td>0.9705</td>
+          <td>0.0970</td>
+        </tr>
+        <tr>
+          <td>300</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">38.25</td>
+          <td>0.9703</td>
+          <td>0.0968</td>
+        </tr>
+        <tr>
+          <td>302</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">38.21</td>
+          <td>0.9700</td>
+          <td>0.0962</td>
+        </tr>
+        <tr>
+          <td>305</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">38.21</td>
+          <td>0.9699</td>
+          <td>0.0969</td>
+        </tr>
+        <tr>
+          <td>309</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">38.20</td>
+          <td>0.9696</td>
+          <td>0.0975</td>
+        </tr>
+        <tr>
+          <td>301</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">38.15</td>
+          <td>0.9697</td>
+          <td>0.0964</td>
+        </tr>
+        <tr>
+          <td>306</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">38.13</td>
+          <td>0.9693</td>
+          <td>0.0982</td>
+        </tr>
+        <tr>
+          <td>303</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">38.11</td>
+          <td>0.9696</td>
+          <td>0.0960</td>
+        </tr>
+        <tr>
+          <td>307</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">38.11</td>
+          <td>0.9693</td>
+          <td>0.0962</td>
+        </tr>
+        <tr>
+          <td>299</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">38.04</td>
+          <td>0.9695</td>
+          <td>0.0964</td>
+        </tr>
+        <tr>
+          <td>311</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">38.02</td>
+          <td>0.9687</td>
+          <td>0.0968</td>
+        </tr>
+        <tr>
+          <td>287</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">34.78</td>
+          <td>0.9437</td>
+          <td>0.1520</td>
+        </tr>
+        <tr>
+          <td>286</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">34.77</td>
+          <td>0.9433</td>
+          <td>0.1488</td>
+        </tr>
+        <tr>
+          <td>288</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">34.72</td>
+          <td>0.9431</td>
+          <td>0.1494</td>
+        </tr>
+        <tr>
+          <td>289</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.68</td>
+          <td>0.9431</td>
+          <td>0.1497</td>
+        </tr>
+        <tr>
+          <td>291</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">34.66</td>
+          <td>0.9433</td>
+          <td>0.1551</td>
+        </tr>
+        <tr>
+          <td>290</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.63</td>
+          <td>0.9425</td>
+          <td>0.1482</td>
+        </tr>
+        <tr>
+          <td>292</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">34.57</td>
+          <td>0.9425</td>
+          <td>0.1500</td>
+        </tr>
+        <tr>
+          <td>295</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">34.47</td>
+          <td>0.9428</td>
+          <td>0.1574</td>
+        </tr>
+        <tr>
+          <td>293</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.45</td>
+          <td>0.9424</td>
+          <td>0.1504</td>
+        </tr>
+        <tr>
+          <td>294</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.40</td>
+          <td>0.9416</td>
+          <td>0.1479</td>
+        </tr>
+        <tr>
+          <td>296</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">34.37</td>
+          <td>0.9416</td>
+          <td>0.1505</td>
+        </tr>
+        <tr>
+          <td>273</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">34.19</td>
+          <td>0.9457</td>
+          <td>0.1330</td>
+        </tr>
+        <tr>
+          <td>297</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.13</td>
+          <td>0.9413</td>
+          <td>0.1507</td>
+        </tr>
+        <tr>
+          <td>298</td>
+          <td>gaussian2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">34.06</td>
+          <td>0.9402</td>
+          <td>0.1477</td>
+        </tr>
+        <tr>
+          <td>274</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">34.01</td>
+          <td>0.9468</td>
+          <td>0.1315</td>
+        </tr>
+        <tr>
+          <td>275</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">33.93</td>
+          <td>0.9458</td>
+          <td>0.1326</td>
+        </tr>
+        <tr>
+          <td>276</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">33.90</td>
+          <td>0.9461</td>
+          <td>0.1318</td>
+        </tr>
+        <tr>
+          <td>277</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">33.80</td>
+          <td>0.9451</td>
+          <td>0.1329</td>
+        </tr>
+        <tr>
+          <td>278</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">33.65</td>
+          <td>0.9472</td>
+          <td>0.1309</td>
+        </tr>
+        <tr>
+          <td>279</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">33.54</td>
+          <td>0.9453</td>
+          <td>0.1326</td>
+        </tr>
+        <tr>
+          <td>280</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">33.42</td>
+          <td>0.9459</td>
+          <td>0.1314</td>
+        </tr>
+        <tr>
+          <td>281</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">33.29</td>
+          <td>0.9440</td>
+          <td>0.1335</td>
+        </tr>
+        <tr>
+          <td>282</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">33.24</td>
+          <td>0.9470</td>
+          <td>0.1311</td>
+        </tr>
+        <tr>
+          <td>283</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">33.02</td>
+          <td>0.9444</td>
+          <td>0.1328</td>
+        </tr>
+        <tr>
+          <td>284</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="mid">32.90</td>
+          <td>0.9450</td>
+          <td>0.1317</td>
+        </tr>
+        <tr>
+          <td>285</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">32.72</td>
+          <td>0.9424</td>
+          <td>0.1346</td>
+        </tr>
+        <tr>
+          <td>271</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="mid">32.53</td>
+          <td>0.9230</td>
+          <td>0.2095</td>
+        </tr>
+        <tr>
+          <td>272</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">32.41</td>
+          <td>0.9193</td>
+          <td>0.2139</td>
+        </tr>
+        <tr>
+          <td>269</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="mid">32.39</td>
+          <td>0.9233</td>
+          <td>0.2111</td>
+        </tr>
+        <tr>
+          <td>267</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="mid">32.28</td>
+          <td>0.9201</td>
+          <td>0.2140</td>
+        </tr>
+        <tr>
+          <td>265</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="mid">32.20</td>
+          <td>0.9206</td>
+          <td>0.2144</td>
+        </tr>
+        <tr>
+          <td>268</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">32.18</td>
+          <td>0.9173</td>
+          <td>0.2173</td>
+        </tr>
+        <tr>
+          <td>270</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">32.03</td>
+          <td>0.9164</td>
+          <td>0.2175</td>
+        </tr>
+        <tr>
+          <td>266</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">31.81</td>
+          <td>0.9136</td>
+          <td>0.2214</td>
+        </tr>
+        <tr>
+          <td>263</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="mid">31.75</td>
+          <td>0.9135</td>
+          <td>0.2237</td>
+        </tr>
+        <tr>
+          <td>261</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="mid">31.75</td>
+          <td>0.9145</td>
+          <td>0.2232</td>
+        </tr>
+        <tr>
+          <td>264</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">31.74</td>
+          <td>0.9122</td>
+          <td>0.2256</td>
+        </tr>
+        <tr>
+          <td>262</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">31.56</td>
+          <td>0.9105</td>
+          <td>0.2273</td>
+        </tr>
+        <tr>
+          <td>260</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="mid">31.22</td>
+          <td>0.9058</td>
+          <td>0.2345</td>
+        </tr>
+        <tr>
+          <td>308</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="bad">15.94</td>
+          <td>0.1837</td>
+          <td>0.6831</td>
+        </tr></tbody>
+</table>
+
+<h2>Summary - average PSNR by mask type</h2>
+<table>
+  <thead>
+    <tr><th>Mask</th><th>Acc</th><th>avg. PSNR (all)</th><th>avg. PSNR (healthy)</th><th>avg. PSNR (pathol.)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>uniform1d</td><td>x4</td><td>31.57</td><td>31.96</td><td>31.38</td></tr><tr><td>gaussian1d</td><td>x4</td><td>34.09</td><td>34.67</td><td>33.80</td></tr><tr><td>gaussian2d</td><td>x8</td><td>33.63</td><td>33.75</td><td>33.58</td></tr><tr><td>poisson2d</td><td>x8</td><td>36.85</td><td>36.24</td><td>37.16</td></tr>
+  </tbody>
+</table>
+
+<p class="generated">Source: ./results/knee_testplan_v2/all_results.json</p>
+</body>
+</html>

@@ -40,40 +40,40 @@ for i in range(0, len(FILES)):
         if f"{sl:03d}" == SLICES[i]: #"016":
             kspace_sl = kspace[sl]   # [Coils, H, W]
 
-            # 1. ESPIRiT
+            # 1. raw k-space to image domain
+            kspace_t = torch.from_numpy(kspace_sl)
+            kspace_real = torch.view_as_real(kspace_t)
+
+            # Raw full-size coil images
+            img_coils_full = torch.view_as_complex(ifft2c_new(kspace_real)) 
+
+            # cropping
+            img_coils_cropped = center_crop(img_coils_full, size=320)
+
+            # 320x320 k-space
+            from mri.fastmri_utils import fft2c_new
+            img_coils_cropped_real = torch.view_as_real(img_coils_cropped)
+            kspace_cropped_t = torch.view_as_complex(fft2c_new(img_coils_cropped_real))
+            kspace_cropped_np = kspace_cropped_t.numpy()
+
+            # 2. espirit
             mps = mr.app.EspiritCalib(
-                kspace_sl,
+                kspace_cropped_np,
                 calib_width=24,
                 crop=0.95,
                 show_pbar=False,
-            ).run()                  # [Coils, H, W] complex64, zero in background
-
-            # 2. SOS-normalize: in-support -> SOS=1, background -> fill with 1/sqrt(n_coils)
-            sos = np.sqrt(np.sum(np.abs(mps)**2, axis=0, keepdims=True))  # [1, H, W]
-            background_mask = sos < 1e-6                                   # [1, H, W] bool
-
-            # normalize in-support pixels
-            sos_safe = np.where(background_mask, 1.0, sos)
-            mps = mps / sos_safe
-
-            # fill background pixels uniformly so SOS=1 there too
-            mps[:, background_mask[0]] = 1.0 / np.sqrt(n_coils)
+            ).run()
 
             # 3. MVUE
-            kspace_t    = torch.from_numpy(kspace_sl)
-            mps_t       = torch.from_numpy(mps)
-            kspace_real = torch.view_as_real(kspace_t)
-            img_coils   = torch.view_as_complex(ifft2c_new(kspace_real))
-            mvue = torch.sum(torch.conj(mps_t) * img_coils, dim=0)
+            mps_t = torch.from_numpy(mps)
+            mvue_cropped = torch.sum(torch.conj(mps_t) * img_coils_cropped, dim=0)
 
-            # 4. Crop first, then normalize slice
-            mvue_cropped = center_crop(mvue,  size=320)
-            mps_cropped  = center_crop(mps_t, size=320)
-
+            # 4. Scale (99th percentile)
             scale = float(np.percentile(np.abs(mvue_cropped.numpy()), 99))
             mvue_cropped = mvue_cropped / scale
+            mps_cropped  = center_crop(mps_t, size=320)
 
-            # 5. Save
+            # 5. save
             sl_dir  = OUT_DIR / "slice"
             mps_dir = OUT_DIR / "mps"
             sl_dir.mkdir(parents=True, exist_ok=True)
@@ -81,7 +81,7 @@ for i in range(0, len(FILES)):
 
             np.save(sl_dir  / f"{sl:03d}.npy", mvue_cropped.numpy())
             np.save(mps_dir / f"{sl:03d}.npy", mps_cropped.numpy())
-            print(f"  Slice {sl:03d} saved  (scale={scale:.4f})")
+            print(f"{FILES[i]} Slice {sl:03d} saved  (scale={scale:.4f})")
 
 endzeit = datetime.now()
 print("End :", endzeit.strftime("%d.%m.%Y %H:%M:%S"))

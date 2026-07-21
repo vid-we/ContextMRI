@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>ContextMRI Knee Testplan</title>
+<style>
+  body        { font-family: 'Courier New', monospace; background: #0f0f0f; color: #e0e0e0; padding: 2rem; }
+  h1, h2      { color: #e0e0e0; font-weight: normal; }
+  h2          { font-size: 0.9rem; margin-top: 2rem; color: #aaa; }
+  table       { border-collapse: collapse; width: 100%; margin-top: 1rem; font-size: 0.85rem; }
+  th          { background: #1e1e1e; padding: 8px 12px; text-align: left; border-bottom: 1px solid #333; }
+  td          { padding: 6px 12px; border-bottom: 1px solid #1a1a1a; }
+  tr:hover td { background: #1a1a1a; }
+  .scan-header td { background: #181818; color: #aaa; padding: 10px 12px 4px; font-size: 0.8rem; border-top: 1px solid #2a2a2a; }
+  .good       { font-weight: bold; }
+  .mid        { color: #aaa; }
+  .bad        { color: #888; }
+  .generated  { color: #555; font-size: 0.75rem; margin-top: 2rem; }
+</style>
+</head>
+<body>
+<h1>ContextMRI - Knee Testplan v1</h1>
+<p>2026-05-11 09:29 | 52 Experiments | 1 Scan | 4 mask types</p>
+
+<h2>MASK: uniform1d x4 (Baseline) | uniform1d x8 | gaussian1d x4 | poisson2d x8</h2>
+<h2>ALL EXPERIMENTS (sorted by scan,  PSNR)</h2>
+<table>
+  <thead>
+    <tr>
+      <th>#</th><th>Mask</th><th>Acc</th><th>CFG</th>
+      <th>Metadata</th><th>PSNR</th><th>SSIM</th><th>LPIPS</th>
+    </tr>
+  </thead>
+  <tbody>
+            <tr class="scan-header">
+            <td colspan="8">file1001429 | Slice 20</td>
+            </tr>
+        <tr>
+          <td>39</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="good">35.53</td>
+          <td>0.9449</td>
+          <td>0.1276</td>
+        </tr>
+        <tr>
+          <td>43</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">35.45</td>
+          <td>0.9439</td>
+          <td>0.1275</td>
+        </tr>
+        <tr>
+          <td>41</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">35.44</td>
+          <td>0.9438</td>
+          <td>0.1272</td>
+        </tr>
+        <tr>
+          <td>47</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">35.38</td>
+          <td>0.9432</td>
+          <td>0.1272</td>
+        </tr>
+        <tr>
+          <td>45</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">35.36</td>
+          <td>0.9432</td>
+          <td>0.1259</td>
+        </tr>
+        <tr>
+          <td>25</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">35.28</td>
+          <td>0.9422</td>
+          <td>0.1276</td>
+        </tr>
+        <tr>
+          <td>51</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">35.28</td>
+          <td>0.9422</td>
+          <td>0.1276</td>
+        </tr>
+        <tr>
+          <td>40</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">35.25</td>
+          <td>0.9419</td>
+          <td>0.1247</td>
+        </tr>
+        <tr>
+          <td>49</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">35.24</td>
+          <td>0.9418</td>
+          <td>0.1268</td>
+        </tr>
+        <tr>
+          <td>42</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">35.20</td>
+          <td>0.9414</td>
+          <td>0.1247</td>
+        </tr>
+        <tr>
+          <td>44</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="good">34.95</td>
+          <td>0.9383</td>
+          <td>0.1256</td>
+        </tr>
+        <tr>
+          <td>46</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.87</td>
+          <td>0.9372</td>
+          <td>0.1265</td>
+        </tr>
+        <tr>
+          <td>48</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="good">34.62</td>
+          <td>0.9341</td>
+          <td>0.1289</td>
+        </tr>
+        <tr>
+          <td>50</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.60</td>
+          <td>0.9338</td>
+          <td>0.1279</td>
+        </tr>
+        <tr>
+          <td>24</td>
+          <td>poisson2d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="good">34.53</td>
+          <td>0.9322</td>
+          <td>0.1309</td>
+        </tr>
+        <tr>
+          <td>30</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="good">33.35</td>
+          <td>0.9188</td>
+          <td>0.1552</td>
+        </tr>
+        <tr>
+          <td>34</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="good">33.35</td>
+          <td>0.9190</td>
+          <td>0.1566</td>
+        </tr>
+        <tr>
+          <td>38</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="good">33.34</td>
+          <td>0.9191</td>
+          <td>0.1588</td>
+        </tr>
+        <tr>
+          <td>28</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="good">33.33</td>
+          <td>0.9185</td>
+          <td>0.1550</td>
+        </tr>
+        <tr>
+          <td>32</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="good">33.32</td>
+          <td>0.9184</td>
+          <td>0.1562</td>
+        </tr>
+        <tr>
+          <td>36</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="good">33.28</td>
+          <td>0.9180</td>
+          <td>0.1580</td>
+        </tr>
+        <tr>
+          <td>27</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="good">33.17</td>
+          <td>0.9159</td>
+          <td>0.1549</td>
+        </tr>
+        <tr>
+          <td>29</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="good">33.14</td>
+          <td>0.9152</td>
+          <td>0.1551</td>
+        </tr>
+        <tr>
+          <td>31</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="mid">32.98</td>
+          <td>0.9133</td>
+          <td>0.1567</td>
+        </tr>
+        <tr>
+          <td>33</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="mid">32.92</td>
+          <td>0.9120</td>
+          <td>0.1575</td>
+        </tr>
+        <tr>
+          <td>26</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="mid">32.90</td>
+          <td>0.9165</td>
+          <td>0.1516</td>
+        </tr>
+        <tr>
+          <td>35</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="mid">32.79</td>
+          <td>0.9107</td>
+          <td>0.1595</td>
+        </tr>
+        <tr>
+          <td>37</td>
+          <td>gaussian1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="mid">32.69</td>
+          <td>0.9086</td>
+          <td>0.1612</td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="mid">31.91</td>
+          <td>0.8998</td>
+          <td>0.2058</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="mid">31.73</td>
+          <td>0.8977</td>
+          <td>0.2098</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">31.67</td>
+          <td>0.8976</td>
+          <td>0.2120</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="mid">31.57</td>
+          <td>0.8934</td>
+          <td>0.2138</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="mid">31.56</td>
+          <td>0.8930</td>
+          <td>0.2118</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="mid">31.47</td>
+          <td>0.8964</td>
+          <td>0.2157</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>no_pathology</td>
+          <td class="mid">31.46</td>
+          <td>0.8924</td>
+          <td>0.2092</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="mid">31.45</td>
+          <td>0.8898</td>
+          <td>0.2134</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="mid">31.28</td>
+          <td>0.8852</td>
+          <td>0.2173</td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td>uniform1d</td>
+          <td>x8</td>
+          <td>0.0</td>
+          <td>empty</td>
+          <td class="bad">29.85</td>
+          <td>0.8754</td>
+          <td>0.2484</td>
+        </tr>
+        <tr>
+          <td>17</td>
+          <td>uniform1d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="bad">29.49</td>
+          <td>0.8745</td>
+          <td>0.2490</td>
+        </tr>
+        <tr>
+          <td>16</td>
+          <td>uniform1d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_pathology</td>
+          <td class="bad">29.42</td>
+          <td>0.8693</td>
+          <td>0.2467</td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td>uniform1d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>full</td>
+          <td class="bad">29.42</td>
+          <td>0.8698</td>
+          <td>0.2474</td>
+        </tr>
+        <tr>
+          <td>15</td>
+          <td>uniform1d</td>
+          <td>x8</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="bad">29.42</td>
+          <td>0.8739</td>
+          <td>0.2492</td>
+        </tr>
+        <tr>
+          <td>21</td>
+          <td>uniform1d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>anatomy_only</td>
+          <td class="bad">29.13</td>
+          <td>0.8732</td>
+          <td>0.2503</td>
+        </tr>
+        <tr>
+          <td>19</td>
+          <td>uniform1d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_mr_params</td>
+          <td class="bad">29.04</td>
+          <td>0.8725</td>
+          <td>0.2507</td>
+        </tr>
+        <tr>
+          <td>18</td>
+          <td>uniform1d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>full</td>
+          <td class="bad">29.02</td>
+          <td>0.8638</td>
+          <td>0.2490</td>
+        </tr>
+        <tr>
+          <td>20</td>
+          <td>uniform1d</td>
+          <td>x8</td>
+          <td>2.0</td>
+          <td>no_pathology</td>
+          <td class="bad">29.01</td>
+          <td>0.8627</td>
+          <td>0.2480</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>anatomy_only</td>
+          <td class="bad">28.70</td>
+          <td>0.8106</td>
+          <td>0.2743</td>
+        </tr>
+        <tr>
+          <td>23</td>
+          <td>uniform1d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>no_mr_params</td>
+          <td class="bad">28.66</td>
+          <td>0.8701</td>
+          <td>0.2533</td>
+        </tr>
+        <tr>
+          <td>22</td>
+          <td>uniform1d</td>
+          <td>x8</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="bad">28.64</td>
+          <td>0.8575</td>
+          <td>0.2519</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>no_mr_params</td>
+          <td class="bad">26.73</td>
+          <td>0.7283</td>
+          <td>0.3268</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>1.0</td>
+          <td>anatomy_only</td>
+          <td class="bad">25.83</td>
+          <td>0.6986</td>
+          <td>0.3499</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td>uniform1d</td>
+          <td>x4</td>
+          <td>3.0</td>
+          <td>full</td>
+          <td class="bad">25.62</td>
+          <td>0.7391</td>
+          <td>0.3446</td>
+        </tr></tbody>
+</table>
+
+<h2>Summary - average PSNR by mask type</h2>
+<table>
+  <thead>
+    <tr><th>Mask</th><th>Acc</th><th>avg. PSNR (all)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>uniform1d</td><td>x4</td><td>30.08</td></tr><tr><td>uniform1d</td><td>x8</td><td>29.19</td></tr><tr><td>gaussian1d</td><td>x4</td><td>33.12</td></tr><tr><td>poisson2d</td><td>x8</td><td>35.13</td></tr>
+  </tbody>
+</table>
+
+<p class="generated">Source: ./results/knee_testplan/all_results.json</p>
+</body>
+</html>
