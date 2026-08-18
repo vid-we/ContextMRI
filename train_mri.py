@@ -281,7 +281,7 @@ def main(args):
         # collate_fn=lambda examples: collate_fn(examples),
         collate_fn=collate_fn,
         # DW, 14.8.2026 from 8 to 0
-        num_workers=0,
+        num_workers=8,
     )
 
     # Scheduler and math around the number of training steps.
