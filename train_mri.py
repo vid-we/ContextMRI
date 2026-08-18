@@ -19,6 +19,8 @@ from torch.optim.swa_utils import AveragedModel, get_ema_multi_avg_fn
 from tqdm.auto import tqdm
 from transformers import CLIPTokenizer, CLIPTextModel
 from dataset_mri import MRIDataset
+# DW added
+from unimed_clip_conditioner import UniMedCLIPTextEncoder
 
 import diffusers
 from diffusers import (
@@ -94,8 +96,14 @@ def main(args):
         if args.output_dir is not None:
             os.makedirs(args.output_dir, exist_ok=True)
 
-    tokenizer = CLIPTokenizer.from_pretrained(args.pretrained_model_name_or_path, subfolder="tokenizer")
-    text_encoder = CLIPTextModel.from_pretrained(args.pretrained_model_name_or_path, subfolder="text_encoder")
+    # DW: conditioning_mode for training:
+    #   "clip_plain"   - baseline: frozen OpenAI CLIP text encoder, comma-separated string
+    #   "clip_xml"     - keep CLIP, reformat the string as XML
+    #   "unimed_clip"  - keep the SAME plain string as clip_plain, swap the frozen encoder for UniMed-CLIP's BiomedBERT text tower
+    mode = args.conditioning_mode
+    uses_clip = mode in ("clip_plain", "clip_xml")
+    uses_unimed = mode == "unimed_clip"
+    # end
     noise_scheduler = DDPMScheduler.from_pretrained(args.pretrained_model_name_or_path, subfolder="scheduler")
 
     unet_config_path = "./configs/unet/config_mri.json"
@@ -103,9 +111,28 @@ def main(args):
         unet_config = json.load(f) 
 
     unet = UNet2DConditionModel.from_config(unet_config)
-
+    
     unet.requires_grad_(True)
-    text_encoder.requires_grad_(False)
+    #DW added
+    tokenizer, text_encoder, unimed_encoder = None, None, None
+
+    if uses_clip:
+        tokenizer = CLIPTokenizer.from_pretrained(args.pretrained_model_name_or_path, subfolder="tokenizer")
+        text_encoder = CLIPTextModel.from_pretrained(args.pretrained_model_name_or_path, subfolder="text_encoder")
+        text_encoder.requires_grad_(False)  # frozen, as in the original ContextMRI recipe
+    elif uses_unimed:
+        unimed_encoder = UniMedCLIPTextEncoder(
+            unimed_clip_repo_path=args.unimed_clip_repo_path,
+            checkpoint_path=args.unimed_clip_checkpoint,
+            model_name=args.unimed_clip_model_name,
+            text_encoder_name=args.unimed_clip_text_encoder_name,
+            context_length=args.unimed_clip_context_length,
+            device="cpu",  # moved to accelerator.device explicitly below
+            expected_hidden_dim=unet_config["cross_attention_dim"],
+        )  # already frozen internally (requires_grad_(False) in its __init__)
+    else:
+        raise ValueError(f"Unknown conditioning_mode {mode!r}")
+    # end
 
     weight_dtype = torch.float32
     if accelerator.mixed_precision == "fp16":
@@ -120,8 +147,15 @@ def main(args):
         )
 
     unet.to(accelerator.device)
-    text_encoder.to(accelerator.device, dtype=weight_dtype)
+    # DW added
+    if uses_clip:
+        text_encoder.to(accelerator.device, dtype=weight_dtype)  # frozen -> safe to cast permanently
+    elif uses_unimed:
+        unimed_encoder.to(accelerator.device, dtype=weight_dtype)  # frozen -> safe to cast permanently
+    # end
     ema_unet = AveragedModel(unet, multi_avg_fn=get_ema_multi_avg_fn(0.999)) # For 0.999 decay
+
+
 
     if args.gradient_checkpointing:
         unet.enable_gradient_checkpointing()
@@ -134,7 +168,7 @@ def main(args):
     def save_model_hook(models, weights, output_dir):
         if accelerator.is_main_process:
             unet_to_save = None
-  
+
             for model in models:
                 if isinstance(model, type(unwrap_model(unet))):
                     unet_to_save = model.state_dict()  # Save full transformer weights
@@ -163,15 +197,15 @@ def main(args):
 
         # Load full weights from the saved state dicts
         unet_state_dict = torch.load(os.path.join(input_dir, "unet_weights.pth"))
-
-        # Set the state dict into the models
         unet_.load_state_dict(unet_state_dict)
+        # DW added
+        to_cast = [unet_]
+        # end
 
         # If mixed precision is being used, ensure the model weights are in float32
         if args.mixed_precision == "fp16":
-            models = [unet_]
             # Upcast trainable parameters to fp32
-            cast_training_params(models)
+            cast_training_params(to_cast)
 
         del unet_state_dict
         torch.cuda.empty_cache()
@@ -189,14 +223,14 @@ def main(args):
         )
 
     # Make sure the trainable params are in float32.
+    trainable_models = [unet] # DW
     if args.mixed_precision == "fp16":
-        models = [unet]
-        cast_training_params(models, dtype=torch.float32)
-    
+        cast_training_params(trainable_models, dtype=torch.float32)
+
     unet_parameters = list(filter(lambda p: p.requires_grad, unet.parameters()))
     unet_parameters_with_lr = {"params": unet_parameters, "lr": args.learning_rate}
     params_to_optimize = [unet_parameters_with_lr]
-
+    
     if not args.optimizer.lower() == "adamw":
         logger.warning(
             f"Unsupported choice of optimizer: {args.optimizer}.Supported optimizers include [adamW]."
@@ -236,14 +270,18 @@ def main(args):
         metadata_file_knee=args.mri_metadata_dir_knee,
         metadata_file_brain=args.mri_metadata_dir_brain,
         train=True,
+        conditioning_mode=args.conditioning_mode, # DW
     )
 
     train_dataloader = torch.utils.data.DataLoader(
         train_dataset,
         batch_size=args.train_batch_size,
         shuffle=True,
-        collate_fn=lambda examples: collate_fn(examples),
-        num_workers=8,
+        # DW, 14.8.2026 replaced
+        # collate_fn=lambda examples: collate_fn(examples),
+        collate_fn=collate_fn,
+        # DW, 14.8.2026 from 8 to 0
+        num_workers=0,
     )
 
     # Scheduler and math around the number of training steps.
@@ -262,9 +300,13 @@ def main(args):
         power=args.lr_power,
     )
 
+    # DW added
+    # clip_plain / clip_xml / unimed_clip: the encoder is frozen (already
+    # placed on accelerator.device above), so only the UNet needs DDP wrapping.
     unet, optimizer, train_dataloader, lr_scheduler = accelerator.prepare(
         unet, optimizer, train_dataloader, lr_scheduler
     )
+    # end
 
     # We need to recalculate our total training steps as the size of the training dataloader may have changed.
     num_update_steps_per_epoch = math.ceil(len(train_dataloader) / args.gradient_accumulation_steps)
@@ -334,6 +376,8 @@ def main(args):
 
     for epoch in range(first_epoch, args.num_train_epochs):
         unet.train()
+        # unimed_encoder / text_encoder are frozen and stay in .eval() throughout
+        # (unimed_encoder was already set to .eval() in its own __init__).
 
         for step, batch in enumerate(train_dataloader):
             models_to_accumulate = [unet]
@@ -341,9 +385,23 @@ def main(args):
                 pixel_values = batch["pixel_values"]
                 prompts = batch["prompts"]
 
-                # encode batch prompts when custom prompts are provided for each image -
-                text_embeddings = encode_text(prompts, tokenizer, text_encoder, device=accelerator.device, max_length=77)
-                text_embeddings = text_embeddings.contiguous()
+                # DW added
+                if uses_clip:
+                    # clip_plain / clip_xml: prompts is a list[str] (the only
+                    # difference between the two arms happened upstream, in
+                    # which utils.row_to_text_string* the dataset called).
+                    condition_embeddings = encode_text(
+                        prompts, tokenizer, text_encoder, device=accelerator.device, max_length=77
+                    )
+                else:
+                    # unimed_clip: prompts is the SAME list[str] as clip_plain;
+                    # only the encoder producing condition_embeddings differs.
+                    condition_embeddings = unimed_encoder(
+                        prompts, device=accelerator.device, max_length=args.unimed_clip_context_length
+                    )
+
+                condition_embeddings = condition_embeddings.contiguous()
+                # end 
                 model_input = pixel_values.to(dtype=weight_dtype)
 
                 # Sample noise that we'll add to the latents
@@ -354,15 +412,13 @@ def main(args):
                 timesteps = torch.randint(0, noise_scheduler.config.num_train_timesteps, (bsz,), device=model_input.device)
                 noisy_model_input = noise_scheduler.add_noise(model_input, noise, timesteps)
 
-                model_pred = unet(noisy_model_input, timestep=timesteps, encoder_hidden_states=text_embeddings).sample 
+                model_pred = unet(noisy_model_input, timestep=timesteps, encoder_hidden_states=condition_embeddings).sample # DW
 
                 loss = F.mse_loss(model_pred.float(), noise.float(), reduction="mean") # epsilon matching
 
                 accelerator.backward(loss)
                 if accelerator.sync_gradients:
-                    params_to_clip = (
-                        unet_parameters
-                    )
+                    params_to_clip = unet_parameters
                     accelerator.clip_grad_norm_(params_to_clip, args.max_grad_norm)
 
                 optimizer.step()
@@ -612,6 +668,46 @@ def parse_args(input_args=None):
         ),
     )
     parser.add_argument("--local_rank", type=int, default=-1, help="For distributed training: local_rank")
+        # DW added
+    parser.add_argument(
+        "--conditioning_mode",
+        type=str,
+        default="clip_plain",
+        choices=["clip_plain", "clip_xml", "unimed_clip"],
+        help=(
+            "Which metadata-conditioning arm to train: "
+            "'clip_plain' = original comma-separated string through frozen OpenAI CLIP (baseline); "
+            "'clip_xml' = XML-structured string through the SAME frozen CLIP; "
+            "'unimed_clip' = SAME plain string as clip_plain, through a frozen UniMed-CLIP "
+            "(BiomedBERT) text encoder instead of OpenAI CLIP."
+        ),
+    )
+    parser.add_argument(
+        "--unimed_clip_repo_path", type=str, default=None,
+        help="Path to your local clone of https://github.com/mbzuai-oryx/UniMed-CLIP "
+             "(the folder containing 'src/'). Required if --conditioning_mode unimed_clip.",
+    )
+    parser.add_argument(
+        "--unimed_clip_checkpoint", type=str, default=None,
+        help="Path to a downloaded UniMed-CLIP .pt checkpoint (see the repo's README "
+             "'Pre-trained Models' table). Required if --conditioning_mode unimed_clip.",
+    )
+    parser.add_argument(
+        "--unimed_clip_model_name", type=str, default="ViT-B-16-quickgelu",
+        help="open_clip model name matching the checkpoint. Use the base (not -L-14) variant "
+             "to keep the text encoder at hidden_dim=768, matching cross_attention_dim with no projection.",
+    )
+    parser.add_argument(
+        "--unimed_clip_text_encoder_name", type=str,
+        default="microsoft/BiomedNLP-BiomedBERT-base-uncased-abstract",
+        help="HF text encoder name matching --unimed_clip_checkpoint's text tower.",
+    )
+    parser.add_argument(
+        "--unimed_clip_context_length", type=int, default=77,
+        help="Token sequence length for UniMed-CLIP's tokenizer. 77 (matching CLIP's) keeps "
+             "the comparison to clip_plain apples-to-apples; UniMed-CLIP itself defaults to 256.",
+    )
+    # end
   
 
     if input_args is not None:
@@ -619,8 +715,14 @@ def parse_args(input_args=None):
     else:
         args = parser.parse_args()
 
-    if args.mri_metadata_dir_brain is None or args.mri_metadata_dir_knee is None: 
-        raise ValueError("Specify both `--metadata-brain` or `--metadata-knee`")
+    # DW edited
+    if args.mri_metadata_dir_knee is None:
+        raise ValueError(
+            "Specify --mri_metadata_dir_knee. --mri_metadata_dir_brain is optional (omit it "
+            "entirely for a knee-only run - MRIDataset already treats a missing brain CSV as "
+            "'no brain data' rather than an error; the original stricter check that required "
+            "both was relaxed here for exactly that use case)."
+        )
 
     env_local_rank = int(os.environ.get("LOCAL_RANK", -1))
     if env_local_rank != -1 and env_local_rank != args.local_rank:

@@ -1,0 +1,225 @@
+ .gitignore                                         |   Bin [31m304[m -> [32m0[m bytes
+ LICENSE                                            |     1 [31m-[m
+ README.md                                          |     8 [31m-[m
+ .../file_brain_AXT1_202_2020576/meta/prompt.txt    |     1 [31m-[m
+ .../brain/file_brain_AXT1_202_2020576/mps/008.npy  |   Bin [31m16384128[m -> [32m0[m bytes
+ .../file_brain_AXT1_202_2020576/slice/008.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/brain/metadata_val.csv              | 21843 [31m-------------------[m
+ assets/fastmri/knee/file1000033/mps/010.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1000033/slice/010.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001126/mps/026.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001126/slice/026.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001184/mps/018.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001184/slice/018.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/meta/prompt.txt    |     1 [31m-[m
+ assets/fastmri/knee/file1001429/mps/000.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/001.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/002.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/003.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/004.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/005.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/006.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/007.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/008.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/009.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/010.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/011.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/012.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/013.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/014.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/015.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/016.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/017.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/018.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/019.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/020.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/021.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/022.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/023.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/024.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/025.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/026.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/027.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/028.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/029.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/030.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/031.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/032.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/033.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/034.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/035.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/036.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/037.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/038.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/039.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/040.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/mps/041.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/000.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/001.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/002.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/003.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/004.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/005.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/006.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/007.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/008.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/009.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/010.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/011.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/012.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/013.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/014.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/015.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/016.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/017.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/018.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/019.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/020.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/021.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/022.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/023.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/024.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/025.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/026.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/027.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/028.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/029.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/030.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/031.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/032.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/033.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/034.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/035.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/036.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/037.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/038.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/039.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/040.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001429/slice/041.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001655/mps/019.npy        |   Bin [31m12288128[m -> [32m0[m bytes
+ assets/fastmri/knee/file1001655/slice/019.npy      |   Bin [31m819328[m -> [32m0[m bytes
+ assets/fastmri/knee/file_slice_overview.csv        |    51 [31m-[m
+ assets/fastmri/knee/file_slice_overview_csv.csv    |    51 [31m-[m
+ assets/fastmri/knee/metadata_val.csv               |  1775 [31m--[m
+ assets/method.pdf                                  |   Bin [31m468955[m -> [32m0[m bytes
+ assets/method.png                                  |   Bin [31m1230908[m -> [32m0[m bytes
+ assets/skm-tea/MTR-228/meta/prompt.txt             |     1 [31m-[m
+ assets/skm-tea/MTR-228/mps/046.npy                 |   Bin [31m16777344[m -> [32m0[m bytes
+ assets/skm-tea/MTR-228/slice/echo0_046.npy         |   Bin [31m2097280[m -> [32m0[m bytes
+ assets/skm-tea/metadata_val.csv                    |  5105 [31m-----[m
+ check_model_param.py                               |    17 [31m-[m
+ check_slice_gen.py                                 |    41 [31m-[m
+ compare_results.py                                 |    36 [31m-[m
+ configs/model_index.json                           |    21 [31m-[m
+ configs/unet/config_mri.json                       |    61 [31m-[m
+ convert_checkpoint.py                              |    21 [31m-[m
+ dataset_mri.py                                     |   231 [31m-[m
+ h5_slicing.py                                      |    87 [31m-[m
+ inference.py                                       |    87 [31m-[m
+ knee_testplan_full/psnr_comparison.png             |   Bin [31m108933[m -> [32m0[m bytes
+ mri/__pycache__/fastmri_utils.cpython-310.pyc      |   Bin [31m5924[m -> [32m0[m bytes
+ mri/__pycache__/fastmri_utils.cpython-311.pyc      |   Bin [31m9538[m -> [32m0[m bytes
+ mri/__pycache__/mri.cpython-310.pyc                |   Bin [31m2758[m -> [32m0[m bytes
+ mri/__pycache__/mri.cpython-311.pyc                |   Bin [31m4726[m -> [32m0[m bytes
+ mri/__pycache__/utils.cpython-310.pyc              |   Bin [31m15808[m -> [32m0[m bytes
+ mri/__pycache__/utils.cpython-311.pyc              |   Bin [31m28787[m -> [32m0[m bytes
+ mri/fastmri_utils.py                               |   216 [31m-[m
+ mri/mri.py                                         |    70 [31m-[m
+ mri/utils.py                                       |   521 [31m-[m
+ pipeline_mri.py                                    |   377 [31m-[m
+ recon_complex_multi.py                             |   216 [31m-[m
+ recon_mri.py                                       |   145 [31m-[m
+ requirements.txt                                   |    11 [31m-[m
+ .../cfg1.0/eta0.8/input/knee/file1001429/016.png   |   Bin [31m66163[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/input/knee/file1001429/017.png   |   Bin [31m67524[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/input/knee/file1001429/018.png   |   Bin [31m68018[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/input/knee/file1001429/019.png   |   Bin [31m69398[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/input/knee/file1001429/020.png   |   Bin [31m70900[m -> [32m0[m bytes
+ .../eta0.8/input/knee/file1001429/mask_016.png     |   Bin [31m1313[m -> [32m0[m bytes
+ .../eta0.8/input/knee/file1001429/mask_017.png     |   Bin [31m1313[m -> [32m0[m bytes
+ .../eta0.8/input/knee/file1001429/mask_018.png     |   Bin [31m1313[m -> [32m0[m bytes
+ .../eta0.8/input/knee/file1001429/mask_019.png     |   Bin [31m1313[m -> [32m0[m bytes
+ .../eta0.8/input/knee/file1001429/mask_020.png     |   Bin [31m1313[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/label/knee/file1001429/016.png   |   Bin [31m84537[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/label/knee/file1001429/017.png   |   Bin [31m88827[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/label/knee/file1001429/018.png   |   Bin [31m91182[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/label/knee/file1001429/019.png   |   Bin [31m92389[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/label/knee/file1001429/020.png   |   Bin [31m93707[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/numpy/knee/file1001429/016.npy   |   Bin [31m819328[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/numpy/knee/file1001429/017.npy   |   Bin [31m819328[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/numpy/knee/file1001429/018.npy   |   Bin [31m819328[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/numpy/knee/file1001429/019.npy   |   Bin [31m819328[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/numpy/knee/file1001429/020.npy   |   Bin [31m819328[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/recon/knee/file1001429/016.png   |   Bin [31m89385[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/recon/knee/file1001429/017.png   |   Bin [31m91314[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/recon/knee/file1001429/018.png   |   Bin [31m91320[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/recon/knee/file1001429/019.png   |   Bin [31m91932[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/recon/knee/file1001429/020.png   |   Bin [31m92775[m -> [32m0[m bytes
+ .../uniform1d/acc_4/cfg1.0/eta0.8/summary.json     |    56 [31m-[m
+ .../cfg1.0/eta0.8/input/knee/file1001429/017.png   |   Bin [31m89463[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/input/knee/file1001429/018.png   |   Bin [31m68020[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/input/knee/file1001429/019.png   |   Bin [31m69398[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/input/knee/file1001429/020.png   |   Bin [31m70899[m -> [32m0[m bytes
+ .../eta0.8/input/knee/file1001429/mask_017.png     |   Bin [31m1313[m -> [32m0[m bytes
+ .../eta0.8/input/knee/file1001429/mask_018.png     |   Bin [31m1313[m -> [32m0[m bytes
+ .../eta0.8/input/knee/file1001429/mask_019.png     |   Bin [31m1313[m -> [32m0[m bytes
+ .../eta0.8/input/knee/file1001429/mask_020.png     |   Bin [31m1313[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/label/knee/file1001429/017.png   |   Bin [31m109488[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/label/knee/file1001429/018.png   |   Bin [31m91182[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/label/knee/file1001429/019.png   |   Bin [31m92389[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/label/knee/file1001429/020.png   |   Bin [31m93707[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/numpy/knee/file1001429/017.npy   |   Bin [31m819328[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/numpy/knee/file1001429/018.npy   |   Bin [31m819328[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/numpy/knee/file1001429/019.npy   |   Bin [31m819328[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/numpy/knee/file1001429/020.npy   |   Bin [31m819328[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/recon/knee/file1001429/017.png   |   Bin [31m138896[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/recon/knee/file1001429/018.png   |   Bin [31m73883[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/recon/knee/file1001429/019.png   |   Bin [31m81353[m -> [32m0[m bytes
+ .../cfg1.0/eta0.8/recon/knee/file1001429/020.png   |   Bin [31m85716[m -> [32m0[m bytes
+ .../uniform1d/acc_4/cfg1.0/eta0.8/summary.json     |    56 [31m-[m
+ results/knee_testplan/all_results.json             |   782 [31m-[m
+ .../gaussian1d/acc4/cfg0.0/empty/input.png         |   Bin [31m69655[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg0.0/empty/label.png         |   Bin [31m96197[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg0.0/empty/recon.npy         |   Bin [31m819328[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg0.0/empty/recon.png         |   Bin [31m92667[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/anatomy_only/input.png  |   Bin [31m69655[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/anatomy_only/label.png  |   Bin [31m96197[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/anatomy_only/recon.npy  |   Bin [31m819328[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/anatomy_only/recon.png  |   Bin [31m92455[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/full/input.png          |   Bin [31m69655[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/full/label.png          |   Bin [31m96197[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/full/recon.npy          |   Bin [31m819328[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/full/recon.png          |   Bin [31m93260[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/no_mr_params/input.png  |   Bin [31m69655[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/no_mr_params/label.png  |   Bin [31m96197[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/no_mr_params/recon.npy  |   Bin [31m819328[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/no_mr_params/recon.png  |   Bin [31m92493[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/no_pathology/input.png  |   Bin [31m69655[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/no_pathology/label.png  |   Bin [31m96197[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/no_pathology/recon.npy  |   Bin [31m819328[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg1.0/no_pathology/recon.png  |   Bin [31m93265[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/anatomy_only/input.png  |   Bin [31m69655[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/anatomy_only/label.png  |   Bin [31m96197[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/anatomy_only/recon.npy  |   Bin [31m819328[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/anatomy_only/recon.png  |   Bin [31m92375[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/full/input.png          |   Bin [31m69655[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/full/label.png          |   Bin [31m96197[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/full/recon.npy          |   Bin [31m819328[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/full/recon.png          |   Bin [31m93776[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/no_mr_params/input.png  |   Bin [31m69655[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/no_mr_params/label.png  |   Bin [31m96197[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/no_mr_params/recon.npy  |   Bin [31m819328[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/no_mr_params/recon.png  |   Bin [31m92574[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/no_pathology/input.png  |   Bin [31m69655[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/no_pathology/label.png  |   Bin [31m96197[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/no_pathology/recon.npy  |   Bin [31m819328[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg2.0/no_pathology/recon.png  |   Bin [31m94029[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg3.0/anatomy_only/input.png  |   Bin [31m69655[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg3.0/anatomy_only/label.png  |   Bin [31m96197[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg3.0/anatomy_only/recon.npy  |   Bin [31m819328[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg3.0/anatomy_only/recon.png  |   Bin [31m92300[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg3.0/full/input.png          |   Bin [31m69655[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg3.0/full/label.png          |   Bin [31m96197[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg3.0/full/recon.npy          |   Bin [31m819328[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg3.0/full/recon.png          |   Bin [31m94266[m -> [32m0[m bytes
+ .../gaussian1d/acc4/cfg3.0/no_mr_params/input.png  |   Bin [31m69655[m -> [32m0[m b

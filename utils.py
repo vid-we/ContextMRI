@@ -179,3 +179,188 @@ def count_entries_in_json(file_path):
         return len(data)
     else:
         raise ValueError("Unsupported JSON structure. It must be a list or a dictionary.")
+        
+# DW
+# schema-mode counterpart to user_input_to_text_string(): same fields, typed
+# dict instead of a formatted string, for SchemaConditioner (utils.py) /
+# CallableConditioner (pipeline_mri.py). `pathology` here is a list[str]
+# (or None), matching row_to_metadata_dict()'s "pathologies" convention -
+# NOT a pre-joined string like user_input_to_text_string() takes.
+def user_input_to_metadata_dict(anatomy, slice_number, contrast, pathology=None, sequence=None,
+                                 TR=None, TE=None, TI=None, flip_angle=None):
+    return {
+        "anatomy": anatomy,
+        "slice": float(slice_number),
+        "contrast": contrast,
+        "pathologies": list(pathology) if pathology else [],
+        "sequence": sequence,
+        "TR": TR, "TE": TE, "TI": TI, "flip_angle": flip_angle,
+    }
+    
+def _pathology_counts(pathology):
+    """Split a comma-separated pathology string into an ordered {name: count} dict.
+    Shared by every serializer (plain / XML / schema) so that all three arms see
+    exactly the same underlying information, differing only in how it is packaged.
+    """
+    if pd.isna(pathology):
+        return {}
+    pathologies = pathology.split(', ')
+    counts = {}
+    for path in pathologies:
+        counts[path] = counts.get(path, 0) + 1
+    return counts
+
+
+def _xml_escape(value):
+    # Minimal escaping - metadata fields are short clinical tokens, not free text,
+    # but defensively escape the five XML special characters if they ever appear.
+    text = str(value)
+    return (text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+                .replace('"', "&quot;").replace("'", "&apos;"))
+
+
+def row_to_text_string_xml(row, p=0.5):
+    """XML-structured equivalent of row_to_text_string(). Same fields, same
+    random parameter-dropout behaviour (governed by p), only the string
+    serialization changes. This is the 'Arm A' (keep CLIP, reformat string)
+    variant for the fastMRI knee/brain metadata.
+    """
+    anatomy = row['anatomy']
+    slice_number = row['slice']
+    contrast = row['contrast']
+    pathology = row['pathology']
+
+    parts = [
+        f"<anatomy>{_xml_escape(anatomy)}</anatomy>",
+        f"<slice>{_xml_escape(slice_number)}</slice>",
+        f"<contrast>{_xml_escape(contrast)}</contrast>",
+    ]
+
+    counts = _pathology_counts(pathology)
+    if counts:
+        items = "".join(
+            f'<item count="{c}">{_xml_escape(name)}</item>' for name, c in counts.items()
+        )
+        parts.append(f"<pathology>{items}</pathology>")
+
+    if random.random() < p:
+        parts.append(
+            "<params>"
+            f"<sequence>{_xml_escape(row['sequence'])}</sequence>"
+            f"<TR>{_xml_escape(row['TR'])}</TR>"
+            f"<TE>{_xml_escape(row['TE'])}</TE>"
+            f"<TI>{_xml_escape(row['TI'])}</TI>"
+            f"<flip_angle>{_xml_escape(row['flip_angle'])}</flip_angle>"
+            "</params>"
+        )
+
+    return "<mri>" + "".join(parts) + "</mri>"
+
+
+def row_to_text_string_skm_tea_xml(row, p=0.5):
+    """XML-structured equivalent of row_to_text_string_skm_tea() ('Arm A' for
+    the SKM-TEA metadata: sequence, anatomy, slice, age, sex, pathology, TR/TE/FA).
+    """
+    slice_number = row['slice']
+    age = row['PatientAge']
+    sex = row['PatientSex']
+    pathology = row['pathology']
+
+    parts = [
+        "<sequence>Qdess</sequence>",
+        "<anatomy>Knee</anatomy>",
+        f"<slice>{_xml_escape(slice_number)}</slice>",
+        f"<age>{_xml_escape(age)}</age>",
+        f"<sex>{_xml_escape(sex)}</sex>",
+    ]
+
+    counts = _pathology_counts(pathology)
+    if counts:
+        items = "".join(
+            f'<item count="{c}">{_xml_escape(name)}</item>' for name, c in counts.items()
+        )
+        parts.append(f"<pathology>{items}</pathology>")
+
+    if random.random() < p:
+        parts.append(
+            "<params>"
+            f"<TR>{_xml_escape(row['RepetitionTime'])}</TR>"
+            f"<TE>{_xml_escape(row['EchoTime1'])}</TE>"
+            f"<flip_angle>{_xml_escape(row['FlipAngle'])}</flip_angle>"
+            "</params>"
+        )
+
+    return "<mri>" + "".join(parts) + "</mri>"
+
+
+# Registry used by dataset_mri.py / train_mri.py / inference.py so the prompt
+# serialization is picked with a single --prompt_format flag instead of
+# scattering if/else branches across the codebase.
+PROMPT_FORMATTERS = {
+    "fastmri": {"plain": row_to_text_string, "xml": row_to_text_string_xml},
+    "skm-tea": {"plain": row_to_text_string_skm_tea, "xml": row_to_text_string_skm_tea_xml},
+}
+
+
+def format_metadata(row, dataset="fastmri", prompt_format="plain", p=0.5):
+    """Single entry point for turning a metadata row into a prompt string.
+    dataset: 'fastmri' or 'skm-tea'. prompt_format: 'plain' or 'xml'.
+    """
+    return PROMPT_FORMATTERS[dataset][prompt_format](row, p=p)
+
+
+# --- Raw (non-serialized) field extraction, used by the schema-aware
+# conditioner (Arm B). Unlike the string formatters above, this keeps every
+# field as a typed value (str for categorical, float for continuous, list[str]
+# for pathology) so a learned encoder can embed each field on its own terms
+# instead of re-tokenizing a formatted string. The same p-driven dropout of
+# the MR parameter block is preserved so all three arms are trained under an
+# identical missingness regime.
+def row_to_metadata_dict(row, p=0.5):
+    anatomy = row['anatomy']
+    slice_number = row['slice']
+    contrast = row['contrast']
+    pathology = row['pathology']
+
+    meta = {
+        "anatomy": str(anatomy),
+        "slice": float(slice_number),
+        "contrast": str(contrast),
+        "pathologies": list(_pathology_counts(pathology).keys()),  # possibly []
+        "sequence": None,
+        "TR": None, "TE": None, "TI": None, "flip_angle": None,
+    }
+
+    if random.random() < p:
+        meta["sequence"] = str(row['sequence'])
+        meta["TR"] = float(row['TR'])
+        meta["TE"] = float(row['TE'])
+        meta["TI"] = float(row['TI'])
+        meta["flip_angle"] = float(row['flip_angle'])
+
+    return meta
+
+
+def row_to_metadata_dict_skm_tea(row, p=0.5):
+    slice_number = row['slice']
+    age = row['PatientAge']
+    sex = row['PatientSex']
+    pathology = row['pathology']
+
+    meta = {
+        "anatomy": "Knee",
+        "slice": float(slice_number),
+        "sequence": "Qdess",
+        "age": float(age) if not pd.isna(age) else None,
+        "sex": str(sex) if not pd.isna(sex) else None,
+        "pathologies": list(_pathology_counts(pathology).keys()),
+        "TR": None, "TE": None, "flip_angle": None,
+    }
+
+    if random.random() < p:
+        meta["TR"] = float(row['RepetitionTime'])
+        meta["TE"] = float(row['EchoTime1'])
+        meta["flip_angle"] = float(row['FlipAngle'])
+
+    return meta
+# end

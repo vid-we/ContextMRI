@@ -9,17 +9,103 @@ from diffusers import DiffusionPipeline
 from mri.utils import real_to_nchw_comp, nchw_comp_to_real, clear, CG
 import os
 
+
+# DW
+# Conditioner abstraction
+#
+# MRIDiffusionPipeline used to call self.tokenizer(...) / self.text_encoder(...)
+# directly inline in encode_prompt(). That hardcoded OpenAI-CLIP-specific
+# conditioning; it couldn't produce encoder_hidden_states from UniMed-CLIP's
+# BiomedBERT tower or from SchemaConditioner's typed-metadata tokens.
+#
+# These two thin wrappers give both cases a uniform interface:
+#   .encode(prompts, device)          -> (B, seq_len, cross_attention_dim)
+#   .encode_null(batch_size, device)  -> the CFG "unconditional" embedding
+# encode_prompt() below only ever talks to this interface, never to a
+# tokenizer/text_encoder pair directly, so adding a fourth or fifth encoder
+# later doesn't require touching encode_prompt() again.
+
+class TextEncoderConditioner:
+    """Wraps a HF tokenizer + text_encoder pair (CLIPTokenizer/CLIPTextModel,
+    used for both clip_plain and clip_xml - they differ only in the prompt
+    STRING built upstream in utils.py, not in this class)."""
+
+    def __init__(self, tokenizer, text_encoder, max_length: int = 77):
+        self.tokenizer = tokenizer
+        self.text_encoder = text_encoder
+        self.max_length = max_length
+
+    def encode(self, prompts: List[str], device) -> torch.Tensor:
+        inputs = self.tokenizer(
+            prompts, padding="max_length", max_length=self.max_length, truncation=True, return_tensors="pt",
+        )
+        input_ids = inputs.input_ids.to(device)
+        return self.text_encoder(input_ids, attention_mask=None)[0]
+
+    def encode_null(self, batch_size: int, device) -> torch.Tensor:
+        return self.encode([""] * batch_size, device)
+
+
+class CallableConditioner:
+    """Wraps any nn.Module with a forward(prompts, device, max_length=None)
+    signature - UniMedCLIPTextEncoder (prompts: list[str]) or
+    SchemaConditioner (prompts: list[dict]) - behind the same encode/
+    encode_null interface as TextEncoderConditioner.
+
+    `empty_value` is what "no metadata" looks like for this conditioner's
+    prompt type: "" for a string encoder, {} for SchemaConditioner. Only used
+    as a fallback if the wrapped module doesn't define null_tokens() itself
+    (SchemaConditioner does; UniMedCLIPTextEncoder doesn't, so it falls back
+    to encoding "" - the same empty-string convention CLIP uses).
+    """
+
+    def __init__(self, module: nn.Module, empty_value=""):
+        self.module = module
+        self.empty_value = empty_value
+
+    def encode(self, prompts, device) -> torch.Tensor:
+        return self.module(prompts, device=device)
+
+    def encode_null(self, batch_size: int, device) -> torch.Tensor:
+        if hasattr(self.module, "null_tokens"):
+            return self.module.null_tokens(batch_size, device=device)
+        return self.encode([self.empty_value] * batch_size, device)
+# end
+
 class MRIDiffusionPipeline(DiffusionPipeline):
     def __init__(
         self,
-        text_encoder: nn.Module,
-        tokenizer,
         unet: nn.Module,
         scheduler,
+        text_encoder: nn.Module = None,
+        tokenizer=None,
+        conditioner=None,
         image_processor = None,
         config_path = None,
+        max_length: int = 77,
     ):
+        """
+        Backward compatible: `MRIDiffusionPipeline(text_encoder=..., tokenizer=..., unet=..., scheduler=...)`
+        (clip_plain / clip_xml - the two arms only differ in the prompt STRING,
+        which is built upstream, not here) still works exactly as before.
+
+        For unimed_clip or schema conditioning, pass `conditioner=` instead of
+        text_encoder/tokenizer, e.g.:
+            conditioner=CallableConditioner(unimed_encoder)                    # unimed_clip
+            conditioner=CallableConditioner(schema_conditioner, empty_value={})  # schema
+        """
         super().__init__()
+        #DW 
+        if conditioner is None:
+            if text_encoder is None or tokenizer is None:
+                raise ValueError(
+                    "Provide either (text_encoder, tokenizer) for CLIP-style conditioning "
+                    "(clip_plain / clip_xml), or a `conditioner` object for unimed_clip / schema "
+                    "conditioning - see pipeline_mri.TextEncoderConditioner / CallableConditioner."
+                )
+            conditioner = TextEncoderConditioner(tokenizer, text_encoder, max_length=max_length)
+        self._conditioner = conditioner
+        #end
         self.text_encoder = text_encoder
         self.tokenizer = tokenizer
         self.unet = unet
@@ -29,17 +115,41 @@ class MRIDiffusionPipeline(DiffusionPipeline):
         if image_processor is not None:
             self.image_processor = image_processor
 
-        self.register_modules(
-            unet=self.unet,
-            scheduler=self.scheduler,
-            text_encoder=self.text_encoder,
-            tokenizer=self.tokenizer
-        )
+        # DW
+        # Only register real diffusers/transformers components here (they
+        # expose the `.dtype` property DiffusionPipeline.to() relies on).
+        # UniMedCLIPTextEncoder / SchemaConditioner are plain nn.Module and
+        # do NOT expose `.dtype`, which makes diffusers' component-iterating
+        # `.to()` raise AttributeError if they're registered the same way -
+        # confirmed by testing against diffusers 0.39's actual `to()` source.
+        # They're moved explicitly in the to() override below instead.
+        modules_to_register = {"unet": self.unet, "scheduler": self.scheduler}
+        if text_encoder is not None:
+            modules_to_register["text_encoder"] = text_encoder
+        if tokenizer is not None:
+            modules_to_register["tokenizer"] = tokenizer
+        self.register_modules(**modules_to_register)
 
-        self.model_cpu_offload_seq = "text_encoder->unet"
+        self.model_cpu_offload_seq = "text_encoder->unet" if text_encoder is not None else "unet"
+        # end
         if config_path:
             self._load_and_set_config(config_path)
 
+    # DW
+    def to(self, *args, **kwargs):
+        pipeline = super().to(*args, **kwargs)
+        underlying_module = getattr(pipeline._conditioner, "module", None)
+        if underlying_module is not None:
+            device = kwargs.get("device", None)
+            if device is None and args:
+                # DiffusionPipeline.to(device) / .to(dtype) / .to(device, dtype) all
+                # pass positionally; only move the module if a device-like arg is present.
+                device = next((a for a in args if isinstance(a, (str, torch.device))), None)
+            if device is not None:
+                underlying_module.to(device)
+        return pipeline
+    # end
+    
     def _load_and_set_config(self, config_path):
         # Load and parse the configuration from the JSON file
         with open(config_path, "r") as f:
@@ -49,12 +159,15 @@ class MRIDiffusionPipeline(DiffusionPipeline):
     @property
     def components(self):
         # Return components as a dictionary
-        return {
-            "unet": self.unet,
-            "scheduler": self.scheduler,
-            "text_encoder": self.text_encoder,
-            "tokenizer": self.tokenizer
-        }
+        # DW
+        components = {"unet": self.unet, "scheduler": self.scheduler}
+        if self.text_encoder is not None:
+            components["text_encoder"] = self.text_encoder
+            components["tokenizer"] = self.tokenizer
+        else:
+            components["conditioner"] = self._conditioner
+        return components
+        # end
 
     def encode_prompt(
         self,
@@ -65,30 +178,18 @@ class MRIDiffusionPipeline(DiffusionPipeline):
         negative_prompt=None,
         max_length=None,
     ):
-        if prompt is not None and isinstance(prompt, str):
+        
+        if prompt is not None and isinstance(prompt, (str, dict)): # DW
+            prompt = [prompt] # DW
             batch_size = 1
         elif prompt is not None and isinstance(prompt, list):
             batch_size = len(prompt)
         else:
-            raise ValueError("Prompt must be either a string or a list of strings.")
+            raise ValueError("Prompt must be a string/dict, or a list of strings/dicts.") # DW
 
-        if max_length is not None:
-            tokenizer_max_length = max_length
-        else:
-            tokenizer_max_length = self.tokenizer.model_max_length
-
-        text_inputs = self.tokenizer(
-            prompt,
-            padding="max_length",
-            max_length=tokenizer_max_length,
-            truncation=True,
-            return_tensors="pt",
-        )
-        text_input_ids = text_inputs.input_ids.to(device)
-        attention_mask = None
-
-        prompt_embeds = self.text_encoder(text_input_ids, attention_mask=attention_mask)[0]
-
+        if max_length is not None and hasattr(self._conditioner, "max_length"): # DW
+            self._conditioner.max_length = max_length  # only meaningful for TextEncoderConditioner (CLIP) # DW
+        prompt_embeds = self._conditioner.encode(prompt, device) # DW
         prompt_embeds = prompt_embeds.to(device=device)
 
         # duplicate text embeddings for each generation per prompt
@@ -100,24 +201,14 @@ class MRIDiffusionPipeline(DiffusionPipeline):
         if do_classifier_free_guidance:
 
             if negative_prompt is None:
-                uncond_tokens = [""] * batch_size
-            elif isinstance(negative_prompt, str):
-                uncond_tokens = [negative_prompt]
+                negative_prompt_embeds = self._conditioner.encode_null(batch_size, device) # DW
+            elif isinstance(negative_prompt, (str, dict)): # DW
+                negative_prompt_embeds = self._conditioner.encode([negative_prompt] * batch_size, device) # DW
             elif isinstance(negative_prompt, list) and len(negative_prompt) == batch_size:
-                uncond_tokens = negative_prompt
+                negative_prompt_embeds = self._conditioner.encode(negative_prompt, device) # DW
             else:
                 raise ValueError("`negative_prompt` should be the same length as `prompt`.")
 
-            uncond_input = self.tokenizer(
-                uncond_tokens,
-                padding="max_length",
-                max_length=prompt_embeds.shape[1],
-                truncation=True,
-                return_tensors="pt",
-            )
-            uncond_input_ids = uncond_input.input_ids.to(device)
-
-            negative_prompt_embeds = self.text_encoder(uncond_input_ids, attention_mask=attention_mask)[0]
             negative_prompt_embeds = negative_prompt_embeds.to(device=device)
 
             # duplicate unconditional embeddings for each generation per prompt
